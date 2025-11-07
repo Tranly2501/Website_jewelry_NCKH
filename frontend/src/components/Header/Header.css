@@ -45,3 +45,32 @@
   font-size: 24px;
   cursor: pointer;
 }
+.cart-icon {
+  position: relative;
+}
+.cart-icon .sl {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 9px;
+  right: -2px;
+  background-color: rgb(255, 83, 83);
+  color: white;
+  border-radius: 50%;
+  padding: 2px px;
+  text-align: center;
+  font-size: 10px;
+}
+.menu {
+  width: 1.25rem; 
+  cursor: pointer;
+  display: block;
+}
+
+/* Ẩn phần tử khi ở màn hình nhỏ hơn breakpoint sm (640px) */
+@media (min-width: 640px) {
+  .menu {
+    display: none;
+  }
+}
+

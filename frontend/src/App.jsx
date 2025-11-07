@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../src/components/Header/Header.jsx'
+import Footer from '../src/components/footer/Footer.jsx'
 import '../src/index.css'
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
@@ -29,6 +30,7 @@ const App = () => {
                     <Route path='/Cart' element = {<Cart />} />
                 </Routes>
             </div>
+            <Footer />
         </div>
     )
 }
