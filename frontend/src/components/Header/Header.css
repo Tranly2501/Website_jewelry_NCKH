@@ -1,0 +1,47 @@
+
+/* Header container */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color); 
+  border-bottom: 2px solid #000;
+  font-weight:350; 
+  padding: 0 25px;
+}
+
+/* Navigation menu */
+.header ul {
+  display: flex;
+  margin-top: 15px;
+  gap: 32px; 
+  padding: 0;
+  list-style: none;
+}
+
+.header a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.header ul li {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.header ul li:hover {
+  color: var(--primary-color);
+  font-weight: 400;
+}
+
+/* Icon group */
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  cursor: pointer;
+}
