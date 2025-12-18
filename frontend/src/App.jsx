@@ -1,9 +1,10 @@
 import React from 'react'
 import Header from '../src/components/Header/Header.jsx'
 import Footer from '../src/components/footer/Footer.jsx'
+import Home from './pages/Home.jsx';
 import '../src/index.css'
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home.jsx';
+// import Home from './pages/Home.jsx';
 import Catalog from './pages/Catalog.jsx';
 import AR from './pages/AR.jsx';
 import Contact from './pages/Contact.jsx';
@@ -12,14 +13,15 @@ import Search from './pages/search.jsx';
 import Account from './pages/Account.jsx';
 import Like from './pages/Like.jsx';
 import Cart from './pages/Cart.jsx';
+
 const App = () => {
 
     return(
-        <div >
-            <Header />
+        <>
+        <Header />
             <div className ='container'>
                 <Routes>
-                    <Route path='/Home' element ={<Home />}/>
+                    <Route path='/' element ={<Home />}/> 
                     <Route path='/Catalog' element = {<Catalog />} />
                     <Route path='/AR' element = {< AR />} />
                     <Route path='/Blog' element = {<Blog />} />
@@ -31,7 +33,7 @@ const App = () => {
                 </Routes>
             </div>
             <Footer />
-        </div>
-    )
-}
+        </>
+    );
+};
 export default App

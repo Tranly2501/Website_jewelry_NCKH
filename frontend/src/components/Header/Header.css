@@ -12,40 +12,46 @@
 }
 
 /* Navigation menu */
-.header ul {
+nav ul {
   display: flex;
-  margin-top: 15px;
+  align-items: center;
+  justify-content: center;
   gap: 32px; 
   padding: 0;
   list-style: none;
 }
 
-.header a {
+nav a {
   text-decoration: none;
   color: var(--text-color);
 }
 
-.header ul li {
+nav ul li {
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
 }
-
-/* Hover effect */
-.header ul li:hover {
-  color: var(--primary-color);
+.active-menu a{
   font-weight: 400;
+  color: var(--primary-color);
+}
+ .active-menu img  {
+  filter: brightness(0) saturate(100%) invert(62%) sepia(39%) saturate(638%)
+    hue-rotate(22deg) brightness(93%) contrast(90%);
 }
 
-/* Icon group */
-.icon-group {
+
+
+
+
+.menu-group {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 24px;
-  cursor: pointer;
+  gap: 20px;
 }
+
 .cart-icon {
+  display: flex;
   position: relative;
 }
 .cart-icon .sl {
@@ -61,16 +67,5 @@
   text-align: center;
   font-size: 10px;
 }
-.menu {
-  width: 1.25rem; 
-  cursor: pointer;
-  display: block;
-}
 
-/* Ẩn phần tử khi ở màn hình nhỏ hơn breakpoint sm (640px) */
-@media (min-width: 640px) {
-  .menu {
-    display: none;
-  }
-}
 

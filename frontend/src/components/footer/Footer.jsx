@@ -7,7 +7,7 @@ import email from '../../assets/email.svg'
 import facebook from '../../assets/facebook.svg'
 import instagram from '../../assets/intagram.svg'
 import twitter from '../../assets/twitter.svg'
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Footer = () => {
 
@@ -18,12 +18,12 @@ const Footer = () => {
                 <div className="footer-column">
                     <h3 className="title">LIÊN KẾT NHANH</h3>
                     <ul className="list">
-                        <NavLink to='/'><li>Trang chủ </li></NavLink>
-                        <NavLink to ='/catalog'>    <li>Danh mục </li></NavLink>
-                        <NavLink to='/contact' >  <li>Liên hệ </li></NavLink>
-                         <NavLink to='/AR'> <li>Trải nghiệm AR</li></NavLink>
-                        <NavLink to='/like'><li>Sản phẩm yêu thích </li></NavLink>
-                        <NavLink  to='/cart'><li> Giỏ hàng </li></NavLink>
+                        <Link to='/Home'><li>Trang chủ </li></Link>
+                        <Link to ='/catalog'>    <li>Danh mục </li></Link>
+                        <Link to='/contact' >  <li>Liên hệ </li></Link>
+                         <Link to='/AR'> <li>Trải nghiệm AR</li></Link>
+                        <Link to='/like'><li>Sản phẩm yêu thích </li></Link>
+                        <Link  to='/cart'><li> Giỏ hàng </li></Link>
                     </ul>
                 </div>
                 <div className="footer-column"> 
