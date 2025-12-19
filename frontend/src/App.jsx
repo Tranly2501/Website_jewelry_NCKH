@@ -1,11 +1,11 @@
 import React from 'react'
 import Header from '../src/components/Header/Header.jsx'
 import Footer from '../src/components/footer/Footer.jsx'
-import Home from './pages/Home.jsx';
+import Home from './pages/Home/Home.jsx';
 import '../src/index.css'
 import { Routes, Route } from 'react-router-dom';
 // import Home from './pages/Home.jsx';
-import Catalog from './pages/Catalog.jsx';
+import Catalog from './pages/Catalog/Catalog.jsx';
 import AR from './pages/AR.jsx';
 import Contact from './pages/Contact.jsx';
 import Blog from './pages/Blog.jsx';
@@ -32,7 +32,7 @@ const App = () => {
                     <Route path='/Cart' element = {<Cart />} />
                 </Routes>
             </div>
-            <Footer />
+        <Footer />
         </>
     );
 };

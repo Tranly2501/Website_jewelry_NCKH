@@ -1,0 +1,20 @@
+.policy-container{
+    background-color: #fee3ba;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+    font-weight: 300;
+    font-size: 18px;
+}
+.item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+.item img{
+    width: 32px;
+    height: 32px;
+}

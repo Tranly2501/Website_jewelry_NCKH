@@ -8,11 +8,7 @@ import Like from '../../assets/heart.svg'
 import Cart from '../../assets/cart.svg'
 import Menu from '../../assets/menu.svg'
 import React,{useState} from 'react'
-import Catalog from '../../pages/Catalog';
-import Home from '../../pages/Home';
-import Blog from '../../pages/Blog';
-import AR from '../../pages/AR';
-import Contact from '../../pages/Contact';
+
 
 
 

@@ -1,0 +1,305 @@
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    height: 100vh;
+    padding-bottom: 10px;
+}
+ .bracelet {
+    grid-row: 1 / span 2;
+    grid-column:  1 / 2 ;
+}
+.ar {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+
+.ring {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+.feature-item{
+    overflow: hidden;
+    position: relative;
+    
+}
+.feature-item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+} 
+
+/* TEXT */
+.feature-text{
+    color: white;
+    font-size: x-large;
+    line-height: 1.25;
+    
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+
+}
+.feature-text.bracelet-text p{
+    position: absolute;
+    font-size: 2.5rem;
+    left: 225px;
+    bottom: 160px;
+}
+.feature-text.bracelet-text button {
+      position: absolute;
+    right: 90px;
+    bottom: 111px;
+}
+.feature-text.ring, .feature-text.ar {
+    position: absolute;
+    font-size: 2rem;
+    bottom: 55px;
+    left:10px;
+}
+.feature-text.ring button, .feature-text.ar button {
+    position: absolute;
+    left: 170px;
+    bottom: -35px;
+}
+
+
+.feature-text h2 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+}
+
+.feature-text button {
+    padding: 10px 20px;
+    background-color: #FFF6E8;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    transition: background-color 0.3s ease;
+
+}
+/* Phần sản phẩm  */
+.product-container h2{
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0;
+    font-family: "Source Serif 4", serif;
+}
+.product-container .product-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 20px 0;
+    border-top: solid 2px #b1adadd3 ;
+    border-bottom: solid 2px #b1adadd3 ;
+}
+
+/*  Trải nghiệm AR */
+.Ar-container {
+    display: flex;
+    height: 100vh;
+    position: relative;
+}
+.Ar-container img {
+    width: 30rem;
+    height: 25rem;
+    object-fit: cover;
+    position: absolute;
+    top: 70px;
+    left: 50px;
+}
+ .TraiNghiem{
+    position: absolute;
+    right: 35px;
+    top: 29px;
+    height: 500px;
+    width: 800px;
+    Background-color: #FFF6E8;
+}
+.TraiNghiem .text-AR{
+    position: absolute;
+    top: 35px;
+    left: 160px;
+    padding: 50px;
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+}
+.text-AR p{
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+.text-AR span{
+    margin: 50px;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 300;
+}
+.Ar-container button{
+    position: absolute;
+    right: 150px;
+    bottom: 139px;
+    color: #0d1020;
+    font-size: 1.5rem;
+    width: 11rem;
+    height: 4rem;
+    padding: 10px 20px;
+    font-style: italic;
+    background-color: #FEE3BA;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+
+/* BST co tiên mùa hè */ 
+.Bst-summer {
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+}
+.Bst-summer .summer-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+.Bst-summer p {
+    position: absolute;
+    left: 5rem;
+    top: 11.5rem;
+    color: #FFFFFF;
+    font-size: 3.5rem;
+    font-weight: 500;
+    font-family: "Source Serif 4", serif; 
+    font-style: italic;
+}
+.Bst-summer button {
+    position: absolute;
+    right:20rem;
+    bottom: 5rem;
+    color: #0d1020;
+    font-size: 1.25rem;
+    width: 10rem;
+    height: rem;
+    padding: 10px;
+    font-style: italic;
+    background-color: #FEE3BA;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-weight: 450;
+}
+
+
+
+/* Feedback section */
+.feedback-wrapper {
+position: relative;
+  padding: 78px 0;
+  /* background: #fffaf2; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feedback-content {
+
+    width: 699px;
+    height: 317px;
+    background: #FFF6E8;
+    border-radius: 18px;
+    text-align: center;
+    padding: 40px 60px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border: 1px solid #000000;
+}
+.feedback-wrapper .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+}
+.feedback-text {
+    font: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    font-weight: 300;
+}
+.feedback-name {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-weight: 300;
+}
+
+.arrow{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 1px solid #3e3838;
+    border-radius:50% ;
+    position: absolute;
+  
+        color: #d19a42;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+}
+.arrow-left {
+    left: 20px;
+}
+.arrow-right {
+    right: 20px;
+}
+
+/* Thông báo */
+.notification-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  padding: 21px 0;
+  background: #fffaf2;
+  border-top: 1px solid #000000;
+}
+.notification-left{
+    max-width: 420px;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: #333;
+    font-weight: 300;
+}
+.notification-right{
+    display: flex;
+    gap: 10px;
+    
+}
+.notification-right input{
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 250px;
+    font-weight: 300;
+}
+
+.notification-right button{
+    padding: 10px 18px;
+  border: none;
+  background: #FEE3BA;
+  font-size: 14px;
+  cursor: pointer;
+}
+.notification-right button:hover{
+    background: #e6b86f;
+    color: #ffffff;
+}

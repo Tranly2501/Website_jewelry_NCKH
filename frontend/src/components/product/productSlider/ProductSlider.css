@@ -1,0 +1,48 @@
+.slider-wrapper {
+  position: relative;
+}
+
+.slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* VÙNG HOVER */
+.hover-zone {
+  position: absolute;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  z-index: 2;
+}
+
+.hover-zone.left {
+  left: 0;
+}
+
+.hover-zone.right {
+  right: 0;
+}
+
+/* Gợi ý UX: mờ dần */
+.hover-zone.left::after,
+.hover-zone.right::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hover-zone.left::after {
+  background: linear-gradient(to right, rgba(255,255,255,.6), transparent);
+}
+
+.hover-zone.right::after {
+  background: linear-gradient(to left, rgba(255,255,255,.6), transparent);
+}
