@@ -18,7 +18,8 @@ export const products = [
     price: 8000000,
     image: ringImage,
     category: "ring",
-    rating: 5
+    rating: 5,
+    isFeatured: true
   },
   {
     id: 3,

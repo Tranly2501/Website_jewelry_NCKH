@@ -10,12 +10,14 @@ export default function ProductSlider({ products }) {
     stopScroll();
     scrollInterval = setInterval(() => {
       sliderRef.current.scrollLeft += direction === "right" ? 2 : -2;
-    }, 16); // ~60fps
+    }, 18); // 
+    
   };
 
   const stopScroll = () => {
     if (scrollInterval) clearInterval(scrollInterval);
   };
+  
 
   return (
     <div className="slider-wrapper">
