@@ -1,14 +1,58 @@
+
+/* Breadcrumb */
+/* --- Breadcrumb Style --- */
+.breadcrumb-wrapper {
+  background-color: #ffe8cc; /* Màu nền be nhạt giống ảnh */
+  width: 100%;
+  padding: 12px 0; /* Khoảng cách trên dưới */
+}
+
+.breadcrumb-container {
+  max-width: 1200px; /* Căn chỉnh theo chiều rộng trang web chính */
+  margin: 0 auto;
+  padding: 0 15px; /* Padding 2 bên để text không sát mép màn hình */
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #8c8c8c; /* Màu chữ xám nhạt */
+}
+
+.breadcrumb-item {
+  text-decoration: none;
+  color: #999; /* Màu chữ mặc định */
+  font-weight: 300; /* Font mảnh */
+  transition: color 0.2s;
+}
+
+.breadcrumb-item:hover {
+  color: #333; /* Đổi màu khi di chuột */
+}
+
+/* Style cho mục đang được chọn (Danh mục) */
+.breadcrumb-item.active {
+  color: #999; 
+  cursor: default;
+}
+
+.breadcrumb-separator {
+  margin: 0 10px; /* Khoảng cách giữa dấu > và chữ */
+  font-size: 10px; /* Dấu > nhỏ hơn chữ một chút */
+  color: #aaa;
+}
+
+/* Tiêu đề và Danh mục */
 .collection-section {
-  background: #faf7f2;
-  padding: 60px 40px 30px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  padding: 40px 0 20px; ;
+  border-bottom: 1px solid #666565;
+   background: #FEFDF8;
 }
 
 /* Title */
 .collection-title {
   text-align: center;
-  font-size: 20px;
+  font-size: 40px;
+  font-weight: 300;
   letter-spacing: 2px;
   margin-bottom: 30px;
 }
@@ -17,18 +61,20 @@
 .collection-list {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 5rem;
   margin-bottom: 30px;
+
 }
 
 .collection-item {
   text-align: center;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .collection-image {
-  width: 64px;
-  height: 64px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: #eee;
   display: flex;
@@ -36,36 +82,142 @@
   justify-content: center;
   margin: 0 auto 8px;
   transition: all 0.3s ease;
+  
 }
 
 .collection-image img {
-  width: 64px;
-  height: 64px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
   border-radius: 50%;
 }
 
+.collection-name {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 355;
+  color: #333;
+}
 /* Hover */
 .collection-item:hover .collection-image {
   background: #e5e0d8;
   transform: scale(1.05);
 }
 
-.collection-item p {
-  font-size: 13px;
-}
+
 
 /* Thanh filter dưới */
 .collection-filter {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  padding-top: 12px;
-  border-top: 1px solid #ccc;
+  align-self: center;
+  font-size: 16px;
+  padding: 20px 40px;
+  border-bottom: 1px solid #666565;
+  
 }
-
+.filter-left {
+  display: flex;
+  align-items: center;
+  font-weight: 350;
+  color: #555;
+}
 .filter-right {
   display: flex;
-  gap: 20px;
+  gap: 25px;
   cursor: pointer;
+  font-weight: 350;
+}
+.filter-right .sort{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.sort-label {
+  font-size: 14px;
+}
+
+.sort-icon {
+  transition: transform 0.3s ease;
+}
+
+.sort-icon.rotate {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.sort-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  width: 180px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.sort-dropdown li {
+  list-style: none;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sort-dropdown li:hover {
+  background: #f6f6f6;
+}
+/* Lựa chọn */
+.filter-right .filter{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+@media screen {
+
+  .collection-filter {
+    gap: 15px;
+    font-size: 13px;
+    padding: 15px 20px;
+  }
+}
+
+/* SLIDER ĐIỀU HƯỚNG VÀ PHÂN TRANG*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 40px 0;
+}
+
+.pagination button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.pagination button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.pagination button.active {
+  background: #000;
+  color: #fff;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

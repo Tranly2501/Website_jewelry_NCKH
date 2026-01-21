@@ -9,10 +9,13 @@ import { useState } from "react";
 const Product = () => {
       const [activeTab, setActiveTab] = useState("new");
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    onchange(tab); // gửi tab ra ngoài để lọc sp
-  };
+    const filteredProducts = products.filter((product) => {
+        if (activeTab === "new") return product.isNew;
+        if (activeTab === "featured") return product.isFeatured;
+        if (activeTab === "sale") return product.isSale;
+        return true;
+    });
+
     return( 
     <>
         <div className = "product-container">
@@ -20,27 +23,26 @@ const Product = () => {
             <div className="product-tabs">
                 <button
         className={`tab ${activeTab === "new" ? "active" : ""}`}
-        onClick={() => handleTabClick("new")}
+        onClick={() => setActiveTab("new")}
       >
         MỚI RA MẮT
                 </button>
 
                 <button
                 className={`tab ${activeTab === "featured" ? "active" : ""}`}
-                onClick={() => handleTabClick("featured")}
+                onClick={() => setActiveTab("featured")}
                 >
                 NỔI BẬT
                  </button>
-                                 <button
+                <button
                 className={`tab ${activeTab === "sale" ? "active" : ""}`}
-                onClick={() => handleTabClick("sale")}
+                onClick={() => setActiveTab("sale")}
                 >
                 GIẢM GIÁ
                  </button>
             </div>
-            <div className="product-item"></div>
         </div>
-        <ProductSlider products={products} />
+        <ProductSlider products={filteredProducts} />
     </>
     )
 }
