@@ -1,0 +1,193 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.container {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+}
+
+.content-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 50px;
+  background-color: #FEE3BA;
+  color: #aaaaaa;
+
+  width: 100vw; 
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 15px 50px;
+}
+
+.content-mid {
+  display: flex;
+  gap: 160px;
+}
+
+.title-header {
+  margin-left: 40px;
+  margin-bottom: 15px;
+  font-size: 30px;
+  color: #555555;
+}
+
+.detail-product {
+  display: flex;
+  align-items: center; 
+  gap: 15px; 
+}
+
+.my-checkbox {
+  width: 16px;  
+  height: 16px;
+  cursor: pointer;
+  accent-color: #FEE3BA;
+}
+
+.detail-product img {
+  width: 65px;
+  height: 90px;
+  object-fit: cover;
+}
+
+.info h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.info p {
+  color: #333; 
+  font-size: 14px;
+  margin: 4px 0; 
+}
+
+.size-tag {
+  display: inline-block; 
+  background-color: #FEE3BA; 
+  padding: 2px;
+  border-radius: 12px; 
+  font-size: 12px; 
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  border: 1px solid #bbb; 
+  width: fit-content;     
+  border-radius: 4px;  
+  margin-left: 50px;   
+}
+
+.quantity-controls button {
+  background: none;
+  border: none;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+}
+
+.quantity-value {
+  padding: 0 15px;
+  border-left: 1px solid #bbb;  
+  border-right: 1px solid #bbb; 
+  min-width: 30px;
+  text-align: center;
+}
+
+.quantity-controls button:hover {
+  background-color: #FEE3BA; 
+}
+
+.total h3 {
+  margin-left: 40px;
+}
+
+.clear {
+  display: flex;
+}
+
+.btn-delete {
+  background: none;      
+  border: none;          
+  font-size: 50px;       
+  color: #111;         
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-delete:hover {
+  color: #ff4d4d;
+}
+
+.separator {
+  border: 0;
+  border-top: 1px solid #111;
+  margin: 15px 0;
+}
+
+.total-product {
+  margin-bottom: 200px;
+  display: flex;
+  gap: 20px;
+}
+
+.total-product p {
+  font-size: 14px;
+}
+
+.total-product button {
+  margin-left: auto;
+  background:none ;
+  border: none;
+  border: 1px solid #bbb;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.total-product button:hover {
+  background-color: #FEE3BA; 
+}
+
+.content-bottom {
+  display: flex;
+  gap: 175px;
+  background-color: #FEE3BA;
+  width: 100vw; 
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 15px 300px;
+}
+
+.color-money {
+  color: #ff4d4d;
+}
+
+.bottom-row3 button {
+  margin-left: auto;
+  border: none;
+  border-radius: 3px;
+  border: 1px solid #bbb;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+p, button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
