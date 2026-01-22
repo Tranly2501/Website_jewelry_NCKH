@@ -25,9 +25,9 @@ function Header()  {
                 <Link to="/">Trang chủ</Link>
               </li>
   
-              <li className={menu === "Catalog" ? "active-menu" : null}
-                onClick={() => setMenu("Catalog")}>
-                <Link to="/Catalog">Danh mục</Link>
+              <li className={menu === "Category" ? "active-menu" : null}
+                onClick={() => setMenu("Category")}>
+                <Link to="/Category">Danh mục</Link>
               </li>
   
               <li

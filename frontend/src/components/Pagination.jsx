@@ -1,4 +1,4 @@
-import "../pages/Catalog/Catalog.css";
+import "../pages/Category/Category.css";
 
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   if (totalPages <= 1) return null;

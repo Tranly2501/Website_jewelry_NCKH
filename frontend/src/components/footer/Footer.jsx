@@ -19,7 +19,7 @@ const Footer = () => {
                     <h3 className="title">LIÊN KẾT NHANH</h3>
                     <ul className="list">
                         <Link to='/Home'><li>Trang chủ </li></Link>
-                        <Link to ='/catalog'>    <li>Danh mục </li></Link>
+                        <Link to ='/Category'>    <li>Danh mục </li></Link>
                         <Link to='/contact' >  <li>Liên hệ </li></Link>
                          <Link to='/AR'> <li>Trải nghiệm AR</li></Link>
                         <Link to='/like'><li>Sản phẩm yêu thích </li></Link>

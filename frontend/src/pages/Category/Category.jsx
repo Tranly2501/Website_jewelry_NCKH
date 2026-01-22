@@ -13,7 +13,7 @@ import boImg from "../../assets/images/id6.png";
 import otherImg from "../../assets/images/id10_4.png";
 
 import { products as allProducts } from "../../data/product";
-import "./Catalog.css";
+import "./Category.css";
 
 /* ================= COLLECTIONS ================= */
 const collections = [
@@ -26,7 +26,7 @@ const collections = [
 
 const PAGE_SIZE = 8;
 
-const Catalog = () => {
+const Category = () => {
   /* ================= STATE ================= */
   const [activeCollection, setActiveCollection] = useState("all");
   const [sortValue, setSortValue] = useState("Sắp xếp");
@@ -191,4 +191,4 @@ const Catalog = () => {
   );
 };
 
-export default Catalog;
+export default Category;

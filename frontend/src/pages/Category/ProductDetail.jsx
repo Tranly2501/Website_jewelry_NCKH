@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "../Catalog/productDetail.css";
+import "../Category/productDetail.css";
 // import '../../index.css'; // Nếu cần
 import Breadcrumb from '../../components/Breadcrumb';
 import Polycy from '../../components/Polycy/Policy.jsx';

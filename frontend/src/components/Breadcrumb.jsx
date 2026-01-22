@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import "../pages/Catalog/Catalog.css";
+import "../pages/Category/Category.css";
 
 const Breadcrumb = () => {
   const location = useLocation();
@@ -9,7 +9,7 @@ const Breadcrumb = () => {
   // Bản đồ map từ đường dẫn URL -> Tên hiển thị
   const pathNames = {
     '/': 'Trang chủ',
-    '/Catalog': 'Danh mục',
+    '/Category': 'Danh mục',
     '/Cart': 'Giỏ hàng',
     '/ProductDetail': 'Sản phẩm',
     '/Contact': 'Liên hệ',
