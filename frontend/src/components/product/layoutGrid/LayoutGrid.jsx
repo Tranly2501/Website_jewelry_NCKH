@@ -2,7 +2,7 @@ import "./LayoutGrid.css";
 import ProductCard from "../productCard/ProductCard";
 
 
-const LayoutGrid = ({ products, columns = 4, limit }) => {
+const LayoutGrid = ({ products, columns = 4, limit}) => {
   return (
     <div
       className="layout-grid"

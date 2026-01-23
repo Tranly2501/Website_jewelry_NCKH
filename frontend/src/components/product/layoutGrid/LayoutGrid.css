@@ -1,5 +1,6 @@
 .layout-grid {
   display: grid;
-  gap: 5px;
-  
+  grid-template-columns: repeat(4, 1fr); /* 🔒 LUÔN 4 CỘT */
+  gap: 30px;
 }
+

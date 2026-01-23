@@ -1,0 +1,65 @@
+/* RelatedProducts.css */
+.related-products-section {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+  border-top: 1px solid #333 ;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #333;
+  margin: 30px 0; /* Khoảng cách với lưới sản phẩm */
+  text-transform: capitalize; /* Viết hoa chữ cái đầu */
+  letter-spacing: 0.5px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Pagination Dots */
+.pagination-dots {
+ background-color: red;  
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  min-height: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background-color: #888;
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background-color: #bbb;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .related-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}

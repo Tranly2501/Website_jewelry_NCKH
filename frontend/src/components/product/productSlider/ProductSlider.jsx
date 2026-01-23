@@ -10,21 +10,19 @@ export default function ProductSlider({ products }) {
     stopScroll();
     scrollInterval = setInterval(() => {
       sliderRef.current.scrollLeft += direction === "right" ? 2 : -2;
-    }, 18); // 
-    
+    }, 16);
   };
 
   const stopScroll = () => {
     if (scrollInterval) clearInterval(scrollInterval);
   };
-  
 
   return (
     <div className="slider-wrapper">
       {/* Hover trái */}
       <div
         className="hover-zone left"
-        onClick={() => startScroll("left")}
+        onMouseEnter={() => startScroll("left")}
         onMouseLeave={stopScroll}
       />
 
@@ -38,7 +36,7 @@ export default function ProductSlider({ products }) {
       {/* Hover phải */}
       <div
         className="hover-zone right"
-        onClick={() => startScroll("right")}
+        onMouseEnter={() => startScroll("right")}
         onMouseLeave={stopScroll}
       />
     </div>

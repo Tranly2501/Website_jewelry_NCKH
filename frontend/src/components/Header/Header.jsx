@@ -9,16 +9,14 @@ import Cart from '../../assets/cart.svg'
 import Menu from '../../assets/menu.svg'
 import React,{useState} from 'react'
 
-
-
-
+ 
 
 function Header()  {
    const [menu, setMenu] = useState("home");
     return(
       <>
         <header className="header">
-            <img src={logo} alt="Italic" className="logo" />
+           <Link to="/"> <img src={logo} alt="Italic" className="logo" /></Link>
             
             <nav>
               <ul>
@@ -27,9 +25,9 @@ function Header()  {
                 <Link to="/">Trang chủ</Link>
               </li>
   
-              <li className={menu === "Catalog" ? "active-menu" : null}
-                onClick={() => setMenu("Catalog")}>
-                <Link to="/Catalog">Danh mục</Link>
+              <li className={menu === "Category" ? "active-menu" : null}
+                onClick={() => setMenu("Category")}>
+                <Link to="/Category">Danh mục</Link>
               </li>
   
               <li
@@ -55,7 +53,7 @@ function Header()  {
               <img className={menu === "search" ? "active-menu" : null}
               onClick={() => setMenu("search")} src={search} alt="Search" />
             </Link>
-          <Link to = "/User">
+          <Link to = "/Account">
             <img className={menu === "User" ? "active-menu" : null}
               onClick={() => setMenu("User")} src={User} alt="User" /></Link>
           <Link to = "/Like">
