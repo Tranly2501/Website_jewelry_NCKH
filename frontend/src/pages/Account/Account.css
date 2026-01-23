@@ -1,0 +1,172 @@
+* {
+    box-sizing: border-box;
+}
+/* Tổng thể khung hình - Căn giữa cỗ máy */
+.Account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #FEFDF8; /* Màu nền kem nhạt Luxury */
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Thiết kế thẻ Card (Dùng chung cho cả Login và Register) */
+.login-card, .register-card {
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+/* Tiêu đề Đăng nhập / Đăng ký */
+.login-title, .title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #000000;
+    border-bottom: 2px solid #333; /* Đường gạch chân như Figma */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Cụm nhập liệu */
+.input-group {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: left;
+}
+
+.input-group label {
+    font-weight: 500;
+    color: #443D3D; 
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    width: 100%;
+    padding-right: 45px;
+}
+
+.input-group input:focus {
+    outline: none;
+    /* border-color: #E76F51; */
+    box-shadow: 0 0 0 4px rgba(231, 111, 81, 0.1);
+}
+/* thêm*/
+.relative-box {
+    position: relative;
+    width: 100%;
+}
+
+/* Hàng Họ và Tên của Register */
+.name-row {
+    display: flex;
+    gap: 15px;
+}
+
+.name-row .input-group {
+    flex: 1;
+}
+
+/* Biểu tượng con mắt */
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%); /* Căn giữa con mắt theo chiều dọc của input */
+    cursor: pointer;
+    color: #999;
+    display: flex;
+    align-items: center;
+}
+
+/* Các dòng thông báo và đường dẫn */
+.error-text {
+    color: #ff4d4f;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.login-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #32302E;
+}
+
+.forgot-password, .switch-link {
+    color: #FF0000;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.switch-link {
+    color: #0044FF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* .switch-link:hover {
+    text-decoration: underline;
+} */
+
+.register-lead {
+    display: flex;             
+    flex-direction: column;   
+    align-items: flex-start;   
+    gap: 5px;                  
+    margin-top: 20px;
+    width: 100%;
+    color: #32302E;
+}
+
+/* Nút bấm */
+.btn-login, .btn-register {
+    width: 60%; 
+    margin: 10px auto 0;
+    display: block;
+    background-color: #333333;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-register:hover, .btn-login:hover {
+    background-color: #000000;
+}
+
+/* Checkbox Điều khoản */
+.terms {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.terms label {
+    color: #382A2A;
+}
