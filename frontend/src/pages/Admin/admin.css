@@ -1,0 +1,256 @@
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-profile {
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 1px solid #34495e;
+}
+
+.admin-profile img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid #fff;
+}
+
+.admin-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.admin-menu li {
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.admin-menu li:hover, .admin-menu li.active {
+    background-color: #34495e;
+    border-left-color: #3498db;
+}
+
+.logout-btn {
+    margin-top: auto;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* CONTENT */
+.admin-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.admin-panel {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-add {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* STATS CARDS */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-card h3 { margin: 0; font-size: 14px; color: #7f8c8d; }
+.stat-card p { font-size: 24px; font-weight: bold; color: #2c3e50; margin: 10px 0 0; }
+
+/* TABLE */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+}
+
+.table-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* BUTTONS & BADGES */
+.btn-edit, .btn-delete {
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+    color: #fff;
+    font-size: 12px;
+    
+}
+.btn-edit { background-color: #f39c12; }
+.btn-delete { background-color: #e74c3c; }
+
+.badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; color: #fff; }
+
+/* --- BỔ SUNG CSS RESPONSIVE --- */
+
+/* Class hỗ trợ cuộn ngang cho bảng trên mobile */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+}
+
+/* Ngăn bảng bị co quá nhỏ làm vỡ chữ */
+.admin-table {
+    min-width: 600px; /* Nếu màn hình nhỏ hơn 600px, bảng sẽ xuất hiện thanh cuộn ngang */
+}
+
+/* --- MÀN HÌNH TABLET (Dưới 1024px) --- */
+@media (max-width: 1024px) {
+    /* Thu nhỏ Sidebar một chút */
+    .admin-sidebar {
+        width: 200px;
+    }
+    
+    /* Grid thống kê chuyển thành 2 cột thay vì 3 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- MÀN HÌNH MOBILE (Dưới 768px) --- */
+@media (max-width: 768px) {
+    
+    /* 1. Chuyển layout từ Ngang sang Dọc */
+    .admin-container {
+        flex-direction: column;
+    }
+
+    /* 2. Sidebar chiếm full chiều rộng và nằm trên cùng */
+    .admin-sidebar {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .admin-profile {
+        padding: 5px 15px;
+        border-bottom: none;
+        border-right: 1px solid #34495e;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .admin-profile img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 0;
+    }
+
+    .admin-profile h3 {
+        display: none; /* Ẩn chữ Admin Control cho gọn */
+    }
+
+    /* Menu chuyển thành hàng ngang */
+    .admin-menu {
+        margin-top: 0;
+        display: flex;
+        flex: 1;
+        overflow-x: auto; /* Cuộn ngang menu */
+        white-space: nowrap; /* Không xuống dòng */
+    }
+
+    .admin-menu li {
+        padding: 15px;
+        border-left: none;
+        border-bottom: 2px solid transparent; /* Đổi hiệu ứng active xuống dưới */
+    }
+
+    .admin-menu li:hover, .admin-menu li.active {
+        border-left-color: transparent;
+        border-bottom-color: #3498db;
+    }
+    
+    .logout-btn {
+        margin-left: auto; /* Đẩy nút đăng xuất sang phải cùng */
+        padding: 15px !important;
+    }
+
+    /* 3. Nội dung chính */
+    .admin-content {
+        padding: 10px;
+    }
+
+    .admin-panel {
+        padding: 10px;
+    }
+
+    /* 4. Thống kê: Chuyển về 1 cột duy nhất */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* 5. Header của Panel (Tiêu đề + Nút thêm mới) */
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .btn-add {
+        width: 100%; /* Nút thêm mới to ra cho dễ bấm */
+    }
+}

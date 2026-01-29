@@ -25,7 +25,6 @@
 
 /* Pagination Dots */
 .pagination-dots {
- background-color: red;  
   display: flex;
   justify-content: center;
   gap: 10px;

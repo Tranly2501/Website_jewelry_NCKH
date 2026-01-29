@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "../Category/productDetail.css";
+import { Link } from 'react-router-dom';
 // import '../../index.css'; // Nếu cần
 import Breadcrumb from '../../components/Breadcrumb';
 import Polycy from '../../components/Polycy/Policy.jsx';
@@ -103,7 +104,9 @@ function ProductDetail() {
 
           <div className="action-buttons">
             <button className="btn-add-cart">Thêm vào giỏ hàng</button>
-            <button className="btn-ar">Trải nghiệm Ar</button>
+            <Link to="/AR">
+              <button className="btn-ar">Trải nghiệm Ar</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -150,8 +153,8 @@ function ProductDetail() {
           {activeTab === "specifications" && (
             <div className="tab-pane fade-in">
               <div className="specs-table">
-               {product.specs && product.specs.length > 0 ? (
-                  product.specs.map((item, index) => (
+               {product.specifications && product.specifications.length > 0 ? (
+                  product.specifications.map((item, index) => (
                     <div className="spec-row" key={index}>
                       <span className="spec-label">{item.label}</span>
                       <span className="spec-value">{item.value}</span>

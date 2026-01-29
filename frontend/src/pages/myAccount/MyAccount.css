@@ -1,0 +1,160 @@
+/* --- CẤU HÌNH CHUNG --- */
+.account-page-wrapper {
+  width: 100%;
+  font-family: var(--font-family_secondary);
+  color: #333;
+  padding-bottom: 50px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+.logout-link {
+  text-decoration: none;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.logout-link:hover {
+  color: #000;
+}
+
+/* --- PAGE TITLE --- */
+.page-title {
+  text-align: center;  
+  font-size: 36px;
+  font-weight: 400;
+  margin: 30px auto;
+  color: #222;
+}
+
+/* --- LAYOUT CHÍNH (Chia cột) --- */
+.account-layout {
+  display: flex;
+  gap: 50px; 
+}
+
+/* --- SIDEBAR (Cột trái) --- */
+.account-sidebar {
+  flex: 0 0 280px; /* Chiều rộng cố định 280px */
+  border-right: 1px solid #e0e0e0; /* Đường kẻ dọc ngăn cách */
+  padding-right: 30px;
+}
+
+/* User Profile nhỏ */
+.user-profile-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.avatar-frame {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.hello-text {
+  font-size: 13px;
+  color: #777;
+}
+
+.username-text {
+  font-size: 14px;
+  font-weight: 700; /* In đậm tên user */
+  color: #333;
+}
+
+/* Menu Navigation */
+.account-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #555;
+  cursor: pointer;
+  padding: 5px 0;
+  text-align: left;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.nav-btn:hover {
+  color: #000;
+  transform: translateX(5px);
+}
+
+/* Trạng thái Active (Giống chữ Dashboard trong ảnh) */
+.nav-btn.active {
+  color: #d4a017; /* Màu vàng nâu/gold */
+  font-style: italic; /* Chữ nghiêng nhẹ nếu muốn giống ảnh hơn */
+}
+
+/* --- CONTENT (Cột phải) --- */
+.account-content {
+  flex: 1; /* Chiếm hết phần còn lại */
+  padding-top: 10px;
+}
+
+.dashboard-content p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+/* Responsive Tablet/Mobile */
+@media (max-width: 768px) {
+  .account-layout {
+    flex-direction: column;
+  }
+  
+  .account-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding-right: 0;
+    padding-bottom: 30px;
+    flex: auto;
+  }
+  
+  .page-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+}
+
+/* Animation nhẹ */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

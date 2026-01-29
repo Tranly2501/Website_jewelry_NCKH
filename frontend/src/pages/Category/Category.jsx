@@ -3,6 +3,7 @@ import LayoutGrid from "../../components/product/layoutGrid/LayoutGrid";
 import Pagination from "../../components/Pagination.jsx";
 import Policy from "../../components/Polycy/Policy.jsx";
 import Breadcrumb from "../../components/Breadcrumb.jsx";
+// import FilterProduct from "../../components/FilterProduct/FilterProduct.jsx"
 
 import filterIcon from "../../assets/filter.svg";
 import sortIcon from "../../assets/arrow_down.svg";
@@ -31,6 +32,7 @@ const Category = () => {
   const [activeCollection, setActiveCollection] = useState("all");
   const [sortValue, setSortValue] = useState("Sắp xếp");
   const [openSort, setOpenSort] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const sortRef = useRef(null);
@@ -169,7 +171,7 @@ const Category = () => {
 
           <div className="filter">
             <img src={filterIcon} alt="" />
-            Lựa chọn
+            Lựa       chọn
           </div>
         </div>
       </div>
@@ -185,8 +187,6 @@ const Category = () => {
           onPageChange={setCurrentPage}
         />
       )}
-
-      <Policy />
     </>
   );
 };

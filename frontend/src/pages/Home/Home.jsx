@@ -4,7 +4,6 @@ import '../../index.css';
 
 import Feature from "../../components/Home/Feature.jsx";
 import Product from "../../components/Home/Product.jsx";
-import ProductSlider from "../../components/product/productSlider/ProductSlider.jsx";
 
 import Feedback from "../../components/Home/Feedback.jsx";
 import Policy from "../../components/Polycy/Policy.jsx";
@@ -15,7 +14,7 @@ const Home = () => {
     return( 
         <>
         <Feature />
-        <Policy />
+        {/* <Policy /> */}
         <Product />
         
         <TraiNghiemAR />

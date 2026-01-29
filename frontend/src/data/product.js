@@ -10,6 +10,7 @@ export const products = [
     name: "Nhẫn bạc S925 đính kim cương",
     description: "Traced in scintillating diamonds, the beveled edge design of this circle pendant makes a powerful style statement.",
     price: 8000000,
+    oldPrice: 1200000,
     image: ringImage,
     images: [
       ringImage,
@@ -19,10 +20,11 @@ export const products = [
       ringImage5
       
     ],
-
-    isNew: true,
+    
+    isNew: false,
     isFeatured: false,
-    isSale:false,
+    isSale: true,
+    isAR : true,
     category: "bracelet",
     rating: 4,
    material:"Bạc S925, kim cương"
@@ -32,6 +34,7 @@ export const products = [
     name: "Nhẫn bạc S925 đính kim cương",
     description: "Traced in scintillating diamonds, the beveled edge design of this circle pendant makes a powerful style statement.",
     price: 8000000,
+    oldPrice: 1500000,
     image: ringImage2,
     images: [
     ringImage,
@@ -41,17 +44,18 @@ export const products = [
     ringImage5
       
     ],
-    category: "ring",
+    category: "bracelet",
     rating: 5,
     isNew: false,
     isFeatured: true,
     isSale:false,
+     isAR: true,
     sizes: ["16 cm", "17 cm", "18 cm", "19 cm"],
     descriptionDetail: `Nhẫn Đá Kim Cương Xanh là sự kết hợp hoàn hảo giữa vẻ đẹp cổ điển và phong cách hiện đại. Được chế tác từ vàng 18K cao cấp, chiếc nhẫn sở hữu độ sáng bóng bền bỉ theo thời gian.
     Điểm nhấn của sản phẩm là viên kim cương xanh (Blue Diamond) được cắt giác tinh xảo, phản chiếu ánh sáng lấp lánh ở mọi góc nhìn. Thiết kế ổ nhẫn "Beveled Edge" giúp bảo vệ viên đá chủ tối đa mà không làm giảm đi độ rực rỡ.
     Đây là món quà tuyệt vời dành tặng cho bản thân hoặc những người thân yêu trong các dịp đặc biệt.`,
     material:"Bạc S925, kim cương",
-    specs: [
+    specifications : [
       { label: "Loại đá chính", value: "Kim cương xanh tự nhiên" },
       { label: "Màu sắc", value: "Xanh đại dương (Deep Blue)" },
       { label: "Hình dạng đá", value: "Tròn (Round Brilliant)" },
@@ -81,6 +85,7 @@ export const products = [
     ],
     category: "ring",
     rating: 2,
+    isAR: true,
     isNew: true,
     isFeatured: false,
     isSale:false,
@@ -89,7 +94,7 @@ export const products = [
     Điểm nhấn của sản phẩm là viên kim cương xanh (Blue Diamond) được cắt giác tinh xảo, phản chiếu ánh sáng lấp lánh ở mọi góc nhìn. Thiết kế ổ nhẫn "Beveled Edge" giúp bảo vệ viên đá chủ tối đa mà không làm giảm đi độ rực rỡ.
     Đây là món quà tuyệt vời dành tặng cho bản thân hoặc những người thân yêu trong các dịp đặc biệt.`,
     material:"Bạc S925, kim cương",
-    specs: [
+    specifications: [
       { label: "Loại đá chính", value: "Kim cương xanh tự nhiên" },
       { label: "Màu sắc", value: "Xanh đại dương (Deep Blue)" },
       { label: "Hình dạng đá", value: "Tròn (Round Brilliant)" },
@@ -107,6 +112,7 @@ export const products = [
     name: "Nhẫn bạc S925 đính kim cương",
     description: "Luxurious sapphire bracelet featuring blue sapphires.",
     price: 8000000,
+    
     image: ringImage4,
         images: [
       ringImage,
@@ -118,6 +124,7 @@ export const products = [
     ],
     category: "bracelet",
     rating: 2,
+    isAR: true,
     isNew: true,
     isFeatured: false,
     isSale:false
@@ -132,7 +139,8 @@ export const products = [
     rating: 4,
     isNew: false,
     isFeatured: false,
-    isSale:true
+    isSale:true,
+     isAR: true,
   },
   {
     id: 6,
@@ -141,9 +149,11 @@ export const products = [
     price: 8000000,
     image: ringImage,
     category: "ring",
-    rating: 1,isNew: true,
+    rating: 1,
+    isNew: true,
     isFeatured: false,
-    isSale:false
+    isSale:false,
+     isAR: true,
   },
   {
     id: 7,
@@ -163,6 +173,7 @@ export const products = [
     description: "Luxurious sapphire bracelet featuring blue sapphires.",
     price: 8500000,
     image: ringImage,
+    isAR: true,
     category: "ring",
     rating: 3,
     isNew: true,
@@ -186,6 +197,7 @@ export const products = [
     description: "Luxurious sapphire bracelet featuring blue sapphires.",
     price: 4000000,
     image: ringImage,
+    isAR: true,
     category: "ring",
     rating: 2,
     isNew: false,
@@ -199,6 +211,7 @@ export const products = [
     price: 3000000,
     image: ringImage,
     category: "ring",
+    isAR: true,
     rating: 2,
     isNew: false,
     isFeatured: true,
@@ -223,6 +236,7 @@ export const products = [
     price: 15000000,
     image: ringImage,
     category: "bracelet",
+    isAR: true,
     rating: 4,
     isNew: false,
     isFeatured: false,

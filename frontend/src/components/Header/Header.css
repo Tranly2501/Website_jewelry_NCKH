@@ -69,4 +69,6 @@ nav ul li {
   font-size: 10px;
 }
 
-
+.search-icon{
+  cursor: pointer;
+}

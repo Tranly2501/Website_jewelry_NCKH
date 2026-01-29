@@ -6,13 +6,13 @@ import search from '../../assets/search.svg'
 import User from '../../assets/account.svg'
 import Like from '../../assets/heart.svg'
 import Cart from '../../assets/cart.svg'
-import Menu from '../../assets/menu.svg'
+import Search from '../Search/Search.jsx';
 import React,{useState} from 'react'
 
- 
 
 function Header()  {
    const [menu, setMenu] = useState("home");
+   const [isSearchOpen, setIsSearchOpen] = useState(false);
     return(
       <>
         <header className="header">
@@ -49,10 +49,17 @@ function Header()  {
           </nav>
 
             <div className="menu-group">
-            <Link to = "/search"> 
+            <div className='search-icon'> 
               <img className={menu === "search" ? "active-menu" : null}
-              onClick={() => setMenu("search")} src={search} alt="Search" />
-            </Link>
+              onClick={() => {
+                setMenu("search");
+                setIsSearchOpen(true);
+              }} src={search} alt="Search" />
+              <Search 
+                isOpen={isSearchOpen}
+                onClose={() =>setIsSearchOpen(false)}
+              />
+            </div>
           <Link to = "/Account">
             <img className={menu === "User" ? "active-menu" : null}
               onClick={() => setMenu("User")} src={User} alt="User" /></Link>
