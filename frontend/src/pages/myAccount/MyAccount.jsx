@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Import hook điều hướng
+import { useNavigate } from 'react-router-dom'; 
 import './MyAccount.css';
 import "../../index.css";
 
 const MyAccount = () => {
   const navigate = useNavigate();
   
-  // 2. Tạo state để lưu thông tin user, không dùng hằng số nữa
+  // 2. Tạo state để lưu thông tin user
   const [user, setUser] = useState({
     fullName: "Khách",
     username: "guest",
     avatar: "https://i.pravatar.cc/150?img=default"
   });
-
-  const [activeTab, setActiveTab] = useState('Thống kê'); // Đặt mặc định là tab đầu tiên
-
-  // 3. useEffect: Chạy 1 lần khi trang vừa load để lấy dữ liệu từ LocalStorage
+  const [activeTab, setActiveTab] = useState('Thống kê'); 
+  // Chạy 1 lần khi trang vừa load để lấy dữ liệu từ LocalStorage
   useEffect(() => {
     // Lấy chuỗi JSON từ localStorage
     const storedUser = localStorage.getItem('currentUser');
@@ -29,7 +27,7 @@ const MyAccount = () => {
     }
   }, [navigate]);
 
-  // 4. Hàm xử lý Đăng xuất
+  //  Hàm xử lý Đăng xuất
   const handleLogout = () => {
     localStorage.removeItem('currentUser');
     // Chuyển hướng về trang đăng nhập
@@ -70,7 +68,7 @@ const MyAccount = () => {
               {/* User Profile Summary */}
               <div className="user-profile-summary">
                 <div className="avatar-frame">
-                  {/* 5. Sử dụng dữ liệu từ state user */}
+                  {/*  Sử dụng dữ liệu từ state user */}
                   <img src={user.avatar || "https://i.pravatar.cc/150?img=5"} alt="User Avatar" />
                 </div>
                 <div className="user-info">
@@ -86,7 +84,7 @@ const MyAccount = () => {
                   <li key={item}>
                     <button 
                       className={`nav-btn ${activeTab === item ? 'active' : ''}`}
-                      onClick={() => handleMenuClick(item)} // Gọi hàm xử lý click mới
+                      onClick={() => handleMenuClick(item)} 
                     >
                       {item}
                     </button>
@@ -97,10 +95,9 @@ const MyAccount = () => {
 
             {/* --- NỘI DUNG PHẢI --- */}
             <div className="account-content">
-              {/* Ví dụ Tab Thống kê (Dashboard cũ) */}
               {activeTab === 'Thống kê' && (
                 <div className="dashboard-content fade-in">
-                  <h3>Thống kê tổng quan</h3>
+                  <h3>Thống kê mua hàng </h3>
                   <p>
                     Chào mừng <strong>{user.fullName}</strong> quay trở lại. Tại đây bạn có thể xem các đơn hàng gần đây, quản lý địa chỉ giao hàng và thông tin tài khoản.
                   </p>

@@ -14,7 +14,7 @@ const Home = () => {
     return( 
         <>
         <Feature />
-        {/* <Policy /> */}
+        <Policy />
         <Product />
         
         <TraiNghiemAR />

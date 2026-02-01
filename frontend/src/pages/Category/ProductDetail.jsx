@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import "../Category/productDetail.css";
 import { Link } from 'react-router-dom';
 // import '../../index.css'; // Nếu cần
-import Breadcrumb from '../../components/Breadcrumb';
 import Polycy from '../../components/Polycy/Policy.jsx';
 import RelatedProducts from '../../components/product/RelatedProducts/RelatedProducts.jsx';
 import { products } from '../../data/product.js';
@@ -30,8 +29,6 @@ function ProductDetail() {
 
   return (
     <div className="page-container">
-      <Breadcrumb />
-      
       {/* ---  GALLERY & INFO --- */}
       <div className="product-wrapper">
         

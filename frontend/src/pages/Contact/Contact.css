@@ -1,0 +1,159 @@
+/* Container chung */
+.contact-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
+}
+
+/* Tiêu đề trang */
+.contact-page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eee; 
+  padding-bottom: 20px;
+}
+
+.contact-page-header h1 {
+  font-weight: 300; 
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 28px;
+  margin: 0;
+}
+
+/* Khung bao quanh nội dung (Border xám) */
+.contact-box-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Để responsive trên mobile */
+  border: 1px solid #e0e0e0; 
+  padding: 50px;
+  gap: 60px; 
+  border-radius: 4px;
+}
+
+/* --- CỘT TRÁI --- */
+.contact-info-col {
+  flex: 1;
+  min-width: 300px;
+}
+
+.info-group {
+  margin-bottom: 30px;
+}
+
+.info-group h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.info-group p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #777;
+  margin: 5px 0;
+  font-weight: 300;
+}
+
+.contact-icon {
+  font-size: 16px;
+  color: #888;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #777;
+  font-size: 14px;
+  font-weight: 300;
+  transition: color 0.2s;
+}
+
+.social-item:hover {
+  color: #333;
+}
+
+/* --- CỘT PHẢI --- */
+.contact-form-col {
+  flex: 1;
+  min-width: 300px;
+}
+
+.form-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form label {
+  display: block;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+  color: #333;
+  font-family: inherit;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #999;
+}
+
+/* Nút Gửi câu hỏi */
+.btn-send-contact {
+  width: 100%;
+  padding: 14px;
+  background-color: transparent;
+  border: 1px solid #333;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.btn-send-contact:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .contact-box-wrapper {
+    flex-direction: column;
+    padding: 20px;
+    gap: 40px;
+  }
+}

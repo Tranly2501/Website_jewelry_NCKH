@@ -6,7 +6,6 @@ import { Eye, EyeOff } from "lucide-react";
 
 const Register = ({ onSwitch }) => {
   // --- 1. STATE QUẢN LÝ DỮ LIỆU NHẬP ---
-  // <--- THÊM STATE CHO HỌ VÀ TÊN
   const [firstName, setFirstName] = useState(""); 
   const [lastName, setLastName] = useState("");
   
@@ -100,7 +99,6 @@ const Register = ({ onSwitch }) => {
 
     try {
         // <--- GỌI API KẾT NỐI
-        // Ghép Họ + Tên thành username để gửi cho Backend
         const fullName = `${firstName} ${lastName}`.trim();
 
         await axios.post("http://localhost:8080/api/user/register", {
@@ -108,10 +106,6 @@ const Register = ({ onSwitch }) => {
             email: email,
             password: password
         });
-
-        // Nếu thành công
-        alert("Đăng ký thành công! Hãy đăng nhập ngay.");
-        
         // Gọi hàm onSwitch để chuyển giao diện sang Login luôn
         if(onSwitch) onSwitch(); 
 
@@ -119,7 +113,6 @@ const Register = ({ onSwitch }) => {
         // <--- XỬ LÝ LỖI TỪ BACKEND TRẢ VỀ
         console.error("Lỗi đăng ký:", error);
         if (error.response && error.response.data) {
-            // Backend trả về lỗi (ví dụ: "Email đã tồn tại")
             alert(error.response.data); 
         } else {
             alert("Lỗi kết nối Server. Vui lòng thử lại sau.");
@@ -136,15 +129,15 @@ const Register = ({ onSwitch }) => {
       
       <form onSubmit={handleRegister} noValidate>
         
-        {/* Hàng Họ và Tên (ĐÃ SỬA: Thêm value và onChange) */}
+        {/* Hàng Họ và Tên*/}
         <div className="name-row">
           <div className="input-group half-width">
             <label>Họ:</label>
             <input 
                 type="text" 
                 placeholder="Nguyễn" 
-                value={firstName} // <--- Thêm dòng này
-                onChange={(e) => setFirstName(e.target.value)} // <--- Thêm dòng này
+                value={firstName} 
+                onChange={(e) => setFirstName(e.target.value)} 
             />
           </div>
           <div className="input-group half-width">
@@ -158,7 +151,7 @@ const Register = ({ onSwitch }) => {
           </div>
         </div>
 
-        {/* Các phần Email, Password giữ nguyên như code của bạn */}
+
         <div className="input-group">
           <label>Email:</label>
           <input 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from '../../assets/logo.svg'
 import search from '../../assets/search.svg'
 import User from '../../assets/account.svg'
-import Like from '../../assets/heart.svg'
+import Wishlist from '../../assets/heart.svg'
 import Cart from '../../assets/cart.svg'
 import Search from '../Search/Search.jsx';
 import React,{useState} from 'react'
@@ -63,16 +63,16 @@ function Header()  {
           <Link to = "/Account">
             <img className={menu === "User" ? "active-menu" : null}
               onClick={() => setMenu("User")} src={User} alt="User" /></Link>
-          <Link to = "/Like">
-            <img className={menu === "Like" ? "active-menu" : null}
-              onClick={() => setMenu("Like")} src={Like} alt="Like" />
+          <Link to = "/Wishlist">
+            <img className={menu === "Wishlist" ? "active-menu" : null}
+              onClick={() => setMenu("Wishlist")} src={Wishlist} alt="Wishlist" />
             </Link>
           <div  className="cart-icon"  >
             <Link to = "/Cart">
             <img className={menu === "Cart" ? "active-menu" : null}
               onClick={() => setMenu("Cart")} src={Cart} alt="Shopping_cart" />
             </Link>
-            <p className='sl'>12</p> 
+            <p className='sl'></p> 
           </div>
           </div>
 

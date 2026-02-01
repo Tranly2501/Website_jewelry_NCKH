@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Breadcrumb from '../components/Breadcrumb';
-import { products } from '../data/product.js';
+import { products } from '../../data/product.js';
 import "./AR.css";
-import "../index.css"
-import Policy from '../components/Polycy/Policy';
+import "../../index.css"
 
-import iconCamera from "../assets/camera.svg"
-import iconFullScreen from "../assets/fullScreen.svg"
-import iconLike from "../assets/heart.svg";
-import iconCart from "../assets/cart.svg";
+
+import iconCamera from "../../assets/camera.svg"
+import iconFullScreen from "../../assets/fullScreen.svg"
+import iconWishlist from "../../assets/heart.svg";
+import iconCart from "../../assets/cart.svg";
 
 const AR = () => {
   const [activeCategory, setActiveCategory] = useState('ring');
@@ -75,7 +74,6 @@ const AR = () => {
 
   return (
     <>
-      <Breadcrumb />
       <section className="ar-section">
         <h2 className="ar-title">TRẢI NGHIỆM THỰC TẾ TĂNG CƯỜNG AR</h2>
 
@@ -117,7 +115,7 @@ const AR = () => {
                 <img src={iconFullScreen} alt="Toàn màn hình" />
                </button>
                <button className="tool-btn">
-                <img src={iconLike} alt="Thêm vào sản phẩm yêu thích" />
+                <img src={iconWishlist} alt="Thêm vào sản phẩm yêu thích" />
                </button>
                <button className="tool-btn">
                 <img src={iconCart} alt="Thêm vào giỏ hàng" />

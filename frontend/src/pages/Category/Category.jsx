@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import LayoutGrid from "../../components/product/layoutGrid/LayoutGrid";
 import Pagination from "../../components/Pagination.jsx";
 import Policy from "../../components/Polycy/Policy.jsx";
-import Breadcrumb from "../../components/Breadcrumb.jsx";
 // import FilterProduct from "../../components/FilterProduct/FilterProduct.jsx"
 
 import filterIcon from "../../assets/filter.svg";
@@ -106,9 +105,7 @@ const Category = () => {
 
   /* ================= RENDER ================= */
   return (
-    <>
-      {/* Thanh điều hướng breadcrumb */}
-      <Breadcrumb />
+      <>
       {/* COLLECTION */}
       <div className="collection-section">
         <h2 className="collection-title">BỘ SƯU TẬP</h2>
@@ -171,7 +168,7 @@ const Category = () => {
 
           <div className="filter">
             <img src={filterIcon} alt="" />
-            Lựa       chọn
+            Lựa chọn
           </div>
         </div>
       </div>

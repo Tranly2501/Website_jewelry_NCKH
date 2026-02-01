@@ -38,37 +38,36 @@
     color: white;
     font-size: x-large;
     line-height: 1.25;
-    
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+        padding: 10px;
 
 }
 .feature-text.bracelet-text p{
-    position: absolute;
-    font-size: 2.5rem;
-    left: 225px;
+position: absolute;
+    font-size: 1.5rem;
+    left: 180px;
     bottom: 160px;
 }
 .feature-text.bracelet-text button {
-      position: absolute;
+    position: absolute;
     right: 90px;
     bottom: 111px;
 }
 .feature-text.ring, .feature-text.ar {
     position: absolute;
-    font-size: 2rem;
+    font-size: 1.5rem;
     bottom: 55px;
     left:10px;
 }
 .feature-text.ring button, .feature-text.ar button {
     position: absolute;
-    left: 170px;
     bottom: -35px;
 }
 
 
 .feature-text h2 {
     margin: 0 0 10px;
-    font-size: 1.5rem;
+    font-size: 1.rem;
 }
 
 .feature-text button {

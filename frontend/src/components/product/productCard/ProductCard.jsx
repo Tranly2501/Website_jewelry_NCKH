@@ -12,7 +12,6 @@ export default function ProductCard({ product }) {
     <Link to="/ProductDetail" className="product-card-link">
       <div className="product-card">
         <div className="image-box">
-          {/* Chỉ giữ lại badge "Mới" theo thiết kế mẫu */}
            {product.isNew && <span className="badge new">Mới</span>}
           {product.isFeatured && <span className="badge featured">Nổi bật</span>}
           {product.isSale && <span className="badge sale">Giảm giá</span>}
@@ -29,7 +28,7 @@ export default function ProductCard({ product }) {
 
         <p className="product-desc">{product.description}</p>
 
-        {/* Phần hiển thị giá mới và giá cũ */}
+ 
         <div className="product-price-box">
           <span className="new-price">
             {formatPrice(product.price)}

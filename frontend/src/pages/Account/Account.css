@@ -9,7 +9,7 @@
     min-height: 100vh;
     background-color: #FEFDF8; /* Màu nền kem nhạt Luxury */
     padding: 40px 20px;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-family)
 }
 
 .login-card {

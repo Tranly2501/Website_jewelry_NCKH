@@ -42,9 +42,6 @@ nav ul li {
 }
 
 
-
-
-
 .menu-group {
   display: flex;
   align-items: center;
@@ -54,8 +51,9 @@ nav ul li {
 .cart-icon {
   display: flex;
   position: relative;
+  
 }
-.cart-icon .sl {
+/* .cart-icon .sl {
   position: absolute;
   width: 14px;
   height: 14px;
@@ -71,4 +69,4 @@ nav ul li {
 
 .search-icon{
   cursor: pointer;
-}
+} */

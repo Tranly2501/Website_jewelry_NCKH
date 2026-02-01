@@ -22,7 +22,7 @@ const Footer = () => {
                         <Link to ='/Category'>    <li>Danh mục </li></Link>
                         <Link to='/contact' >  <li>Liên hệ </li></Link>
                          <Link to='/AR'> <li>Trải nghiệm AR</li></Link>
-                        <Link to='/like'><li>Sản phẩm yêu thích </li></Link>
+                        <Link to='/Wishlist'><li>Sản phẩm yêu thích </li></Link>
                         <Link  to='/cart'><li> Giỏ hàng </li></Link>
                     </ul>
                 </div>

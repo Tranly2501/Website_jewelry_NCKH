@@ -1,28 +1,37 @@
-import React from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom';
+
 import Header from '../src/components/Header/Header.jsx'
 import Footer from '../src/components/footer/Footer.jsx'
 import Policy from './components/Polycy/Policy.jsx';
-
+import Breadcrumb from './components/Breadcrumb';
 import Home from './pages/Home/Home.jsx';
 import '../src/index.css'
-import { Routes, Route } from 'react-router-dom';
 import Category from './pages/Category/Category.jsx';
-import AR from './pages/AR.jsx';
-import Contact from './pages/Contact.jsx';
-import Blog from './pages/Blog.jsx';
+import AR from './pages/AR/AR.jsx';
+import Contact from './pages/Contact/Contact.jsx';
+import Blog from './pages/Blog/Blog.jsx';
 import Search from './pages/search.jsx';
 import Account from './pages/Account/Account.jsx';
 import MyAccount from './pages/myAccount/MyAccount.jsx';
 import Admin from './pages/Admin/Admin.jsx'
-import Like from './pages/Like.jsx';
-import Cart from './pages/Cart.jsx';
+import Wishlist from './pages/Wishlist/Wishlist.jsx';
+import Cart from './pages/Cart/Cart.jsx';
 import ProductDetail from './pages/Category/ProductDetail.jsx';
 
+
 const App = () => {
- 
-    return(
+    const location = useLocation(); 
+   // danh sách các trang muốn ẩn policy
+  const hidePolicyRoutes = ['/Cart', '/Account', '/Admin','/'];
+  const isHidden = hidePolicyRoutes.includes(location.pathname);
+
+  // danh sách các trang muốn ẩn breadcrumb
+  const hideBreadcrumbRoutes = ['/','/Admin'];
+  const isHiddenBreadcrumb = hideBreadcrumbRoutes.includes(location.pathname);
+ return (
         <>
         <Header />
+            {!isHiddenBreadcrumb && <Breadcrumb />}
             <div className ='container'>
                 <Routes>
                     <Route path='/' element ={<Home />}/> 
@@ -34,13 +43,13 @@ const App = () => {
                     <Route path='/Account' element = {<Account />} />
                     <Route path='/MyAccount' element = {<MyAccount />} />
                     <Route path='/Admin' element = {<Admin />} />
-                    <Route path='/Like' element = {<Like />} />
+                    <Route path='/Wishlist' element = {<Wishlist />} />
                     <Route path='/Cart' element = {<Cart />} />
                     <Route path='/ProductDetail' element = {<ProductDetail />} />
                      
                 </Routes>
             </div>
-        <Policy/>
+        {!isHidden && <Policy />}
         <Footer />
         </>
     );

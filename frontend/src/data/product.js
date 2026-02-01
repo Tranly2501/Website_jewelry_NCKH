@@ -27,7 +27,7 @@ export const products = [
     isAR : true,
     category: "bracelet",
     rating: 4,
-   material:"Bạc S925, kim cương"
+   material:"Bạc S925, kim cương",
   },
   {
     id: 2,

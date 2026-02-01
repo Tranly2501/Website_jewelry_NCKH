@@ -15,7 +15,7 @@ const Breadcrumb = () => {
     '/Contact': 'Liên hệ',
     '/Blog': 'Blog',
     '/Account': 'Tài khoản',
-    '/Like': 'Yêu thích',
+    '/Wishlist': 'Yêu thích',
     '/AR': 'Thực tế ảo',
   };
 
