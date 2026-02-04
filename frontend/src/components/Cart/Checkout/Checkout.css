@@ -1,0 +1,215 @@
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkout-summary-section {
+  /* background: #fdfdfd; */
+  padding: 25px;
+  /* border: 1px solid #eee; */
+  border-radius: 12px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-info img {
+  border-radius: 4px;
+}
+
+.order-totals {
+  margin: 20px 0;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.grand-total {
+  border-top: 2px solid #eee;
+  padding-top: 15px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.total-price {
+  color: #ff8a80;
+}
+
+.btn-submit-order {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff9e91;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-submit-order:hover {
+  background-color: #ff8a80;
+}
+
+/* Tiến trình active cho đường line */
+.cart-progress-line.active {
+  background-color: #333;
+}
+
+.required-star {
+  color: red;
+  margin-left: 4px; /* Tạo khoảng cách nhỏ với chữ phía trước */
+}
+
+.checkout-form-section h3 {
+    margin-bottom: 30px;
+}
+
+/* thêm */
+
+.checkbox-group {
+  display: flex;         /* Kích hoạt Flexbox */
+  align-items: center;   /* Căn giữa tất cả các phần tử theo chiều dọc */
+  gap: 10px;            /* Tạo khoảng cách giữa ô tích và chữ */
+  margin-top: 15px;      /* Khoảng cách với phần trên */
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 14px;           /* Tăng kích thước ô tích cho dễ bấm */
+  height: 14px;
+  cursor: pointer;
+  margin: 0;             /* Xóa margin mặc định của trình duyệt để tránh lệch */
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  color: #333;
+  line-height: 1;        /* Đảm bảo chiều cao dòng không đẩy chữ lên xuống */
+  cursor: pointer;
+  margin: 0;             /* Xóa margin để không bị đẩy lệch */
+}
+
+.form-group textarea {
+    min-height: 200px;
+}
+
+.form-group h4 {
+    margin-bottom: 10px;
+}
+
+/* thêm */
+
+.coupon-toggle {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.toggle-link {
+  color: #000;
+  text-decoration: underline; /* Tạo gạch chân */
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.toggle-link:hover {
+  color: #ff9e91; /* Đổi màu nhẹ khi di chuột vào */
+}
+
+/* Khung nhập mã với viền đứt nét theo Figma */
+.coupon-input-container {
+  border: 1px dashed #ccc; /* Viền đứt nét */
+  padding: 20px;
+  margin-top: 10px;
+  max-width: 400px;
+  border-radius: 4px;
+}
+
+.coupon-input-container p {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.input-group {
+  display: flex !important; /* Buộc phải dàn hàng ngang */
+  flex-direction: row;      /* Đảm bảo hướng là hàng ngang */
+  align-items: center;      /* Căn giữa cho bằng đầu nhau */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-apply {
+  background-color: red; 
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-apply:hover {
+  opacity: 0.9;
+}
