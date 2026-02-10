@@ -13,19 +13,22 @@ const MyAccount = () => {
     avatar: "https://i.pravatar.cc/150?img=default"
   });
   const [activeTab, setActiveTab] = useState('Thống kê'); 
-  // Chạy 1 lần khi trang vừa load để lấy dữ liệu từ LocalStorage
   useEffect(() => {
-    // Lấy chuỗi JSON từ localStorage
-    const storedUser = localStorage.getItem('currentUser');
-    
-    if (storedUser) {
-      // Parse chuỗi JSON thành Object và lưu vào state
-      setUser(JSON.parse(storedUser));
-    } else {
-      // Nếu không tìm thấy user (chưa đăng nhập), đá về trang đăng nhập
-      navigate('/account'); 
-    }
-  }, [navigate]);
+        // 1. Lấy chuỗi JSON từ LocalStorage
+        const storedUser = localStorage.getItem("currentUser");
+        const token = localStorage.getItem("accessToken");
+
+        // 2. Kiểm tra nếu CÓ user và CÓ token
+        if (storedUser && token) {
+            // Chuyển lại thành Object và lưu vào State
+            setUser(JSON.parse(storedUser));
+        } else {
+            // 3. Nếu không có (chưa đăng nhập), đá về trang Login
+            alert("Vui lòng đăng nhập trước!");
+            navigate("/login"); 
+        }
+    }, [navigate]);
+
 
   //  Hàm xử lý Đăng xuất
   const handleLogout = () => {

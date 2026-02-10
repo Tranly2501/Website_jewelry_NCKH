@@ -4,10 +4,12 @@ import ringImage3 from "../assets/images/id6.png";
 import ringImage2 from "../assets/images/id10_3.png";
 import ringImage5 from "../assets/images/id10_2.png";
 
+
+
 export const products = [
   {
     id: 1,
-    name: "Nhẫn bạc S925 đính kim cương",
+    name: " thử ar Nhẫn bạc S925 đính kim cương",
     description: "Traced in scintillating diamonds, the beveled edge design of this circle pendant makes a powerful style statement.",
     price: 8000000,
     oldPrice: 1200000,
@@ -25,7 +27,8 @@ export const products = [
     isFeatured: false,
     isSale: true,
     isAR : true,
-    category: "bracelet",
+    category: "ring",
+    model:"/assets/ring.glb",
     rating: 4,
    material:"Bạc S925, kim cương",
   },

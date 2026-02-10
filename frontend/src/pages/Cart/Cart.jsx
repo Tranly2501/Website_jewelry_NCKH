@@ -3,9 +3,12 @@ import { FaTrashAlt } from "react-icons/fa";
 import './Cart.css';
 import '../../index.css'
 import { products } from '../../data/product.js'; 
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   // lấy 2 sp đầu tiền để đề mo
+  const navigate = useNavigate();
+
   const [cartItems, setCartItems] = useState(
     products.slice(0, 2).map(item => ({
       ...item, 
@@ -54,6 +57,24 @@ const handleRemoveItem = (id) => {
   const grandTotal = subTotal + taxAmount;
   // Tổng số lượng sản phẩm
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  const handleGoToCheckout = () => {
+    // 3. Hàm chuyển trang
+    if (cartItems.length === 0) {
+      alert("Giỏ hàng của người khác đang trống!");
+      return;
+    }
+    // CHUYỂN TRANG KÈM DỮ LIỆU (STATE)
+    navigate('/checkout', { 
+      state: { 
+        items: cartItems, 
+        total: grandTotal
+      } 
+    });
+  };
+  const updateCart = () =>{
+    navigate('/Category');
+  }
 
   return (
     <div className='cart-page-wrapper'>
@@ -130,7 +151,7 @@ const handleRemoveItem = (id) => {
            <label htmlFor="check-all">Tất cả sản phẩm</label>
         </div>
         <div className='update-btn-box'>
-           <button className='btn-update-cart'>Cập nhật giỏ hàng</button>
+           <button className='btn-update-cart' onClick={updateCart}>Cập nhật giỏ hàng</button>
         </div>
       </div>
       
@@ -147,7 +168,7 @@ const handleRemoveItem = (id) => {
                 <p>Thành tiền: <span className='price-highlight final'>{formatCurrency(grandTotal)}</span></p>
             </div>
             <div className='summary-col action'>
-                <button className='btn-checkout'>Tiến hành thanh toán</button>
+                <button className='btn-checkout' onClick={handleGoToCheckout}>Tiến hành thanh toán</button>
             </div>
          </div>
       </div>

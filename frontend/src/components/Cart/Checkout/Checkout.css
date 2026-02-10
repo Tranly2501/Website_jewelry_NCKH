@@ -1,0 +1,351 @@
+/* 1. IMPORT FONT CHỮ */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;600;700&display=swap');
+
+:root {
+  --font-primary: 'Josefin Sans', sans-serif;       /* Font nội dung */
+  --font-secondary: 'Source Serif 4', serif;        /* Font tiêu đề */
+  --color-border: #222;  /* Màu viền khung đậm như ảnh */
+  --color-text: #444;
+  --color-gold-btn: #bfa688; /* Màu nút bấm giống ảnh (Nâu be) */
+  --color-gold-hover: #a88e70;
+}
+
+body {
+    font-family: var(--font-primary);
+}
+
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: var(--color-text);
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; 
+  gap: 50px;
+  margin-top: 40px;
+}
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+
+
+.checkbox-group {
+  display: flex;         
+  align-items: center;   
+  gap: 10px;          
+  margin-top: 15px;      
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 14px;           /* Tăng kích thước ô tích cho dễ bấm */
+  height: 14px;
+  cursor: pointer;
+  margin: 0;             /* Xóa margin mặc định của trình duyệt để tránh lệch */
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  color: #333;
+  line-height: 1;        /* Đảm bảo chiều cao dòng không đẩy chữ lên xuống */
+  cursor: pointer;
+  margin: 0;             /* Xóa margin để không bị đẩy lệch */
+}
+
+.form-group textarea {
+    min-height: 200px;
+}
+
+.form-group h4 {
+    margin-bottom: 10px;
+}
+
+/* thêm */
+
+.coupon-toggle {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.toggle-link {
+  color: #000;
+  text-decoration: underline; /* Tạo gạch chân */
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.toggle-link:hover {
+  color: #ff9e91; /* Đổi màu nhẹ khi di chuột vào */
+}
+
+/* Khung nhập mã với viền đứt nét theo Figma */
+.coupon-input-container {
+  border: 1px dashed #ccc; /* Viền đứt nét */
+  padding: 20px;
+  margin-top: 10px;
+  max-width: 400px;
+  border-radius: 4px;
+}
+
+.coupon-input-container p {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.input-group {
+  display: flex !important; /* Buộc phải dàn hàng ngang */
+  flex-direction: row;      /* Đảm bảo hướng là hàng ngang */
+  align-items: center;      /* Căn giữa cho bằng đầu nhau */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-apply {
+  background-color: red; 
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-apply:hover {
+  opacity: 0.9;
+}
+
+
+
+
+/* --- STYLE CỘT PHẢI --- */
+.summary-box {
+    border: 2px solid var(--color-border); /* Viền khung đậm */
+    padding: 30px;
+    background: #fff;
+}
+
+/* Tiêu đề "Đơn Hàng Của Bạn" */
+.summary-heading {
+    font-family: var(--font-primary);
+    font-size: 22px;
+    font-weight: 450;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* Các dòng thông tin (Row) */
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    font-family: var(--font-primary);
+    font-size: 15px;
+}
+
+.header-row {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #000;
+}
+
+/* Tổng phụ & Vận chuyển section */
+.subtotal-row {
+    font-weight: 600;
+    color: #000;
+}
+
+.shipping-section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.section-sub-heading {
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    color: #bfa688; 
+}
+
+
+.radio-group, .payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.radio-label input[type="radio"] {
+    accent-color: #000; /* Màu dấu chấm radio */
+    width: 16px;
+    height: 16px;
+}
+
+/* Tổng cộng */
+.total-row {
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+    align-items: center;
+}
+
+.total-row .label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.total-row .total-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Phương thức thanh toán */
+
+/* Style cho ô chọn phương thức thanh toán */
+.payment-card {
+    border: 1px solid #eee;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background: #fafafa;
+    font-weight: 400;
+    color: #666;
+}
+
+/* Khi được chọn (Active) */
+.payment-card.active {
+    border-color: #bfa688; /* Màu vàng kim */
+    background-color: #fff8e1;
+    font-weight: 450;
+}
+
+
+/* Căn chỉnh nội dng trong radio label */
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Khoảng cách giữa nút tròn, logo và chữ */
+    cursor: pointer;
+}
+
+/* Mũi tên nhỏ trỏ lên (trang trí) */
+.payment-desc::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #f7f7f7;
+}
+
+/* Chính sách & Điều khoản */
+.policy-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.policy-text a, .terms-checkbox a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.terms-checkbox {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.terms-checkbox input {
+    margin-top: 3px;
+    accent-color: #000;
+}
+
+/* Nút Đặt Hàng */
+.btn-place-order {
+    width: 100%;
+    background-color: var(--color-gold-btn);
+    color: #fff;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-place-order:hover {
+    background-color: var(--color-gold-hover);
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .checkout-content {
+        grid-template-columns: 1fr; /* Dồn thành 1 cột */
+    }
+}

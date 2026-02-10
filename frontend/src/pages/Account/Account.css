@@ -35,7 +35,7 @@
 }
 
 /* Cụm nhập liệu */
-.input-group {
+.uth-input-group {
     width: 100%;
     margin-bottom: 20px;
     display: flex;
@@ -44,14 +44,14 @@
     text-align: left;
 }
 
-.input-group label {
+.uth-input-group label {
     font-weight: 500;
     color: #443D3D; 
     font-size: 0.95rem;
     margin-bottom: 8px;
 }
 
-.input-group input {
+.uth-input-group input {
     padding: 12px 16px;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
@@ -75,7 +75,7 @@
     gap: 15px;
 }
 
-.name-row .input-group {
+.name-row .uth-input-group {
     flex: 1;
 }
 
@@ -192,12 +192,12 @@
 }
 
 /* Layout form */
-.input-group {
+.uth-input-group {
   margin-bottom: 20px;
   text-align: left;
 }
 
-.input-group label {
+.uth-uth-input-group label {
   display: block;
   font-size: 14px;
   color: #555;
@@ -205,7 +205,7 @@
   font-weight: 350;
 }
 
-.input-group input {
+.uth-uth-input-group input {
   width: 100%;
   padding: 12px;
   border: 1px solid #e0e0e0; /* Viền xám nhạt */
@@ -215,7 +215,7 @@
   transition: border-color 0.2s;
 }
 
-.input-group input:focus {
+.uth-uth-input-group input:focus {
   border-color: #333;
 }
 
@@ -299,5 +299,3 @@
   font-style: italic;
   text-align: left;
 }
-
-

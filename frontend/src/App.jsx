@@ -17,16 +17,17 @@ import Admin from './pages/Admin/Admin.jsx'
 import Wishlist from './pages/Wishlist/Wishlist.jsx';
 import Cart from './pages/Cart/Cart.jsx';
 import ProductDetail from './pages/Category/ProductDetail.jsx';
-
+import Checkout from './components/Cart/Checkout/Checkout.jsx'; // Thêm dòng này ở nhóm các dòng import
+import Confirm from "./components/Cart/Confirm/Confirm.jsx";
 
 const App = () => {
     const location = useLocation(); 
    // danh sách các trang muốn ẩn policy
-  const hidePolicyRoutes = ['/Cart', '/Account', '/Admin','/'];
+  const hidePolicyRoutes = ['/Cart', '/Account', '/Admin','/checkout', '/','/confirm'];
   const isHidden = hidePolicyRoutes.includes(location.pathname);
 
   // danh sách các trang muốn ẩn breadcrumb
-  const hideBreadcrumbRoutes = ['/','/Admin'];
+  const hideBreadcrumbRoutes = ['/','/Admin','/checkout','/confirm'];
   const isHiddenBreadcrumb = hideBreadcrumbRoutes.includes(location.pathname);
  return (
         <>
@@ -46,7 +47,8 @@ const App = () => {
                     <Route path='/Wishlist' element = {<Wishlist />} />
                     <Route path='/Cart' element = {<Cart />} />
                     <Route path='/ProductDetail' element = {<ProductDetail />} />
-                     
+                     <Route path="/checkout" element={<Checkout />} />
+                     <Route path="/confirm" element={<Confirm />} />
                 </Routes>
             </div>
         {!isHidden && <Policy />}

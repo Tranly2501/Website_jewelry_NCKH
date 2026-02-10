@@ -1,0 +1,291 @@
+.confirm-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.success-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2f855a;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.check-icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.confirm-main-content {
+    /* background: #fff; */
+    /* border: 1px solid #eee; */
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.order-details-card h4 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+.info-section {
+    margin: 20px 0;
+    line-height: 1.8;
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    border-top: 2px solid #eee;
+    padding-top: 10px;
+    margin-top: 20px;
+}
+
+/* thêm */
+.line {
+    border-top: 2px solid #eee;
+    padding-top: 10px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+
+.payment-qr-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px dashed #ccc;
+}
+
+.qr-image {
+    width: 250px;
+    height: 250px;
+    display: block;
+    margin: 20px 0;
+}
+
+.status-badge {
+    background: #FEE3BA;
+    color: #b7791f;
+    padding: 8px 15px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.warning-text {
+    color: #e53e3e;
+    font-weight: bold;
+    margin-top: 20px !important;
+}
+
+
+ .bank-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;        
+    padding-left: 5rem;
+    margin-left: 2rem;      
+}
+
+.bank-info-box h4 {
+    margin-bottom: 5px;    
+}
+
+.bank-info-box p {
+    margin: 0;              
+}
+
+.btn-confirm-transfer{
+    width: fit-content;
+    padding: 10px;
+}
+/* --- BỐ CỤC 2 CỘT CHO VÍ ĐIỆN TỬ --- */
+.e-wallet-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 50px;
+    align-items: start;
+}
+
+/* --- CỘT TRÁI: CHỌN VÍ & QR --- */
+.wallet-left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Container chứa 2 thẻ chọn ví */
+.wallet-cards-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Thẻ chọn ví (Giống ảnh mẫu) */
+.wallet-card-item {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fff;
+    opacity: 0.6; /* Mờ khi chưa chọn */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.wallet-card-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.wallet-card-item span {
+    font-weight: bold;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Trạng thái Active cho MoMo */
+.wallet-card-item.active.momo {
+    opacity: 1;
+    border: 2px solid #a50064;
+    background-color: #fce4ec; /* Nền hồng nhạt */
+    transform: translateY(-5px);
+}
+.wallet-card-item.active.momo span { color: #a50064; }
+
+/* Trạng thái Active cho ZaloPay */
+.wallet-card-item.active.zalo {
+    opacity: 1;
+    border: 2px solid #0068ff;
+    background-color: #e3f2fd; /* Nền xanh nhạt */
+    transform: translateY(-5px);
+}
+.wallet-card-item.active.zalo span { color: #0068ff; }
+
+
+/* Phần hiển thị QR */
+.qr-display-area {
+    text-align: center;
+}
+
+.qr-frame {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 16px;
+    background: #fff;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.qr-frame img {
+    width: 180px;
+    height: 180px;
+    display: block;
+}
+
+.status-tag {
+    background: #FEE3BA;
+    color: #b7791f;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+}
+
+/* --- CỘT PHẢI: THÔNG TIN --- */
+.wallet-right-section {
+    padding-top: 20px;
+}
+
+.info-title {
+    font-family: var(--font-secondary);
+    font-size: 20px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.payment-info-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+    width: 500px;
+}
+
+.info-row {
+    display: flex;
+    font-size: 16px;
+    align-items: baseline;
+}
+
+.info-row .label {
+    width: 140px; /* Độ rộng cố định cho nhãn */
+    color: #666;
+}
+
+.info-row .value {
+    color: #333;
+    flex: 1;
+}
+
+.font-number {
+    letter-spacing: 1.5px;
+}
+
+
+
+/* Nút xác nhận */
+.btn-confirm-wallet {
+    width: fit-content;
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px; /* Bo góc vuông nhẹ như ảnh */
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+}
+
+.btn-confirm-wallet:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .e-wallet-layout {
+        grid-template-columns: 1fr; /* Về 1 cột trên điện thoại */
+        gap: 30px;
+    }
+    
+    .wallet-left-section {
+        border-bottom: 1px dashed #ddd;
+        padding-bottom: 30px;
+    }
+}

@@ -29,41 +29,64 @@ const Login = ({ onSwitch }) => {
     };
 
     // 2. Logic xử lý đăng nhập (ĐÃ KẾT NỐI BACKEND)
+    // 2. Logic xử lý đăng nhập
     const handleLogin = async (e) => {
         e.preventDefault();
         
         try {
             // GỌI API ĐĂNG NHẬP
-
             const response = await axios.post('http://localhost:8080/api/user/login', {
-                email: usernameInput, // Backend chờ field là "email", nên ta map usernameInput vào đây
+                email: usernameInput,
                 password: passwordInput
             });
 
-            // NẾU THÀNH CÔNG (Backend trả về 200 OK)
-            const { token, user } = response.data; 
-
-            // 1. Lưu token để dùng cho các phiên sau
-            localStorage.setItem("accessToken", token);
+            // --- BƯỚC 1: KIỂM TRA DỮ LIỆU TỪ SERVER (QUAN TRỌNG) ---
+            console.log("Kết quả API trả về:", response.data); 
             
-            // 2. Lưu thông tin user 
-            if (user) {
-                localStorage.setItem("currentUser", JSON.stringify(user));
-            } 
+            const { token, user } = response.data;
 
-            // 3. L chuyển trang dựa trên ROLE (Quyền)
-            if (user && user.role === 'admin') {
-                navigate("/Admin"); 
-            } else {
-                navigate("/MyAccount"); 
+            // Kiểm tra xem có lấy được user không
+            if (!user) {
+                setErrorMessage("Lỗi: Không lấy được thông tin người dùng!");
+                return;
             }
 
+            console.log("Vai trò (Role) của user là:", user.role);
+
+            // --- BƯỚC 2: XỬ LÝ ADMIN ---
+            // Chuyển role về chữ thường để so sánh cho chính xác (tránh lỗi Admin vs admin)
+            const role = user.role ? user.role.toLowerCase() : "";
+
+            if (role === 'admin') {
+                // 1. Hiện thông báo hỏi
+                const confirmSwitch = window.confirm(
+                    `Xin chào Admin ${user.username || ""}!\nBạn có muốn chuyển sang trang Quản Trị (Dashboard) không?`
+                );
+
+                // 2. Nếu bấm OK -> Chuyển sang cổng 5013
+                if (confirmSwitch) {
+                    console.log("Đang chuyển sang trang Admin...");
+                    const userString = encodeURIComponent(JSON.stringify(user));
+
+                    window.location.href = `http://localhost:5013?accessToken=${token}&userData=${userString}`;
+                    return; 
+                }
+                // Nếu bấm Cancel -> Code sẽ chạy tiếp xuống dưới (coi như admin muốn mua hàng)
+            }
+
+            // --- BƯỚC 3: XỬ LÝ KHÁCH HÀNG (HOẶC ADMIN TỪ CHỐI SANG DASHBOARD) ---
+            
+            // Lưu token
+            localStorage.setItem("accessToken", token);
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            
+            alert("Đăng nhập thành công!");
+            navigate("/MyAccount"); 
+            
         } catch (err) {
-            // NẾU CÓ LỖI (Sai pass, lỗi server...)
-            console.error("Lỗi đăng nhập:", err);
+            console.error("Lỗi đăng nhập chi tiết:", err);
             setError(true);
             
-            // Lấy thông báo lỗi từ backend gửi về (nếu có)
             if (err.response && err.response.data) {
                 const msg = typeof err.response.data === 'string' 
                             ? err.response.data 
@@ -80,7 +103,7 @@ const Login = ({ onSwitch }) => {
             <h2 className="login-title">Đăng nhập</h2>
 
             <form onSubmit={handleLogin}>
-                <div className="input-group">
+                <div className="uth-input-group">
                     <label>Email đăng nhập</label>
                     <input 
                         type="text" 
@@ -90,7 +113,7 @@ const Login = ({ onSwitch }) => {
                     />
                 </div>
 
-                <div className={`input-group password-wrapper ${error ? "error-mode" : ""}`}>
+                <div className={`uth-input-group password-wrapper ${error ? "error-mode" : ""}`}>
                     <label>Mật khẩu</label>
                     <div className="relative-box">
                         <input

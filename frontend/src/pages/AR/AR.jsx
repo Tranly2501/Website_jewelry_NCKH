@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { products } from '../../data/product.js';
+import { ARProcessor } from '../../components/ArProcessor.jsx';
 import "./AR.css";
 import "../../index.css"
 
@@ -14,10 +15,36 @@ const AR = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   
   // --- CAMERA LOGIC ---
-  const videoRef = useRef(null);
+const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const arContainerRef = useRef(null);
+  const processorRef = useRef(null);
+
   const [photo, setPhoto] = useState(null); // Ảnh chụp
   const [isFlashing, setIsFlashing] = useState(false); // Hiệu ứng nháy
+
+  // --- KHỞI TẠO AR
+  useEffect( () => {
+    const initAR = async () => {
+      if ( videoRef.current && arContainerRef.current) {
+        processorRef.current = new ARProcessor(videoRef.current, arContainerRef.current);
+        await processorRef.current.init();
+        processorRef.current.start();
+      }
+    }; 
+    initAR();
+    return () => {
+      if (processorRef.current) processorRef.current.stop();
+    };
+  }, []);
+
+  //--  LOAD MODEL 3D LÊN 
+  useEffect(() => {
+    if (processorRef.current && selectedProduct) {
+        console.log("Load model cho:", selectedProduct.name);
+        processorRef.current.loadModel("/assets/ring.glb"); 
+    }
+  }, [selectedProduct]);
 
   const startCamera = async () => {
     try {
@@ -93,8 +120,30 @@ const AR = () => {
                   playsInline 
                   muted 
                   className="live-video"
+                  style={{ 
+                      position: 'absolute',
+                      top: 0, left: 0,
+                      width: '100%', height: '100%',
+                      objectFit: 'cover',
+                      transform: 'scaleX(-1)', // Lật gương
+                      zIndex: 1
+                  }}
                 />
-              
+
+                {/* Container AR 3D (Đè lên video) */}
+                <div 
+                    ref={arContainerRef}
+                    className="ar-3d-container"
+                    style={{
+                        position: 'absolute',
+                        top: 0, left: 0,
+                        width: '100%', height: '100%',
+                        pointerEvents: 'none',
+                        zIndex: 2, // Cao hơn video
+                        transform: 'scaleX(-1)'
+                    }}
+                ></div>
+
                 {/* Canvas ẩn */}
                 <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
 
@@ -107,7 +156,7 @@ const AR = () => {
             </div>
 
             {/* THANH CÔNG CỤ  */}
-            <div className="ar-tools-bar">
+            <div className="ar-tools-bar" style={{ zIndex: 20 }}>
                <button className="tool-btn camera-btn" onClick={takePhoto}>
                 <img src={iconCamera} alt="Chụp ảnh" />
                </button>

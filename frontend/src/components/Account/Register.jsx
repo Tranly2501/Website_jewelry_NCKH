@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import axios from "axios"; // <--- 1. NHỚ IMPORT AXIOS
+import axios from "axios"; 
 import "../../pages/Account/Account.css";
 import "../../index.css";
 import { Eye, EyeOff } from "lucide-react";
 
 const Register = ({ onSwitch }) => {
-  // --- 1. STATE QUẢN LÝ DỮ LIỆU NHẬP ---
+  // --- 1. STATE QUẢN LÝ DỮ LIỆU ---
   const [firstName, setFirstName] = useState(""); 
   const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState(""); // <--- THÊM STATE PHONE
   
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,12 +18,13 @@ const Register = ({ onSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // --- 3. STATE QUẢN LÝ LỖI (ERROR MESSAGE) ---
+  // --- 3. STATE LỖI ---
   const [passError, setPassError] = useState("");
   const [confirmError, setConfirmError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState(""); // <--- THÊM LỖI PHONE
 
-  // --- CÁC HÀM VALIDATE GIỮ NGUYÊN ---
+  // --- VALIDATE EMAIL ---
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!value) {
@@ -30,7 +32,7 @@ const Register = ({ onSwitch }) => {
       return false;
     }
     if (!emailRegex.test(value)) {
-      setEmailError("Email không hợp lệ (ví dụ: abc@gmail.com).");
+      setEmailError("Email không hợp lệ.");
       return false;
     }
     setEmailError("");
@@ -43,10 +45,24 @@ const Register = ({ onSwitch }) => {
     if(emailError) validateEmail(val);
   };
 
+  // --- VALIDATE PHONE (SỐ ĐIỆN THOẠI) ---
+  const validatePhone = (value) => {
+    const phoneRegex = /^[0-9]{10}$/; // Bắt buộc 10 chữ số
+    if (!value) {
+        setPhoneError("Vui lòng nhập số điện thoại.");
+        return false;
+    }
+    if (!phoneRegex.test(value)) {
+        setPhoneError("SĐT phải gồm 10 chữ số.");
+        return false;
+    }
+    setPhoneError("");
+    return true;
+  };
+
+  // --- VALIDATE PASSWORD ---
   const validatePassword = (value) => {
-    // Regex: 8 ký tự, 1 hoa, 1 thường, 1 số, 1 đặc biệt
     const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})");
-    
     if (!value) { 
         setPassError("Vui lòng nhập mật khẩu."); 
         return false;
@@ -85,38 +101,40 @@ const Register = ({ onSwitch }) => {
     validateConfirmPassword(password, val);
   };
 
-  // --- 4. XỬ LÝ SUBMIT FORM & KẾT NỐI BACKEND ---
+  // --- 4. XỬ LÝ SUBMIT ---
   const handleRegister = async (e) => { 
     e.preventDefault(); 
     
+    // Validate toàn bộ trước khi gửi
     const isEmailValid = validateEmail(email);
+    const isPhoneValid = validatePhone(phone); // <--- CHECK PHONE
     const isPassValid = validatePassword(password);
     const isConfirmValid = validateConfirmPassword(password, confirmPassword);
 
-    if (!isEmailValid || !isPassValid || !isConfirmValid) {
+    if (!isEmailValid || !isPhoneValid || !isPassValid || !isConfirmValid) {
         return; 
     }
 
     try {
-        // <--- GỌI API KẾT NỐI
         const fullName = `${firstName} ${lastName}`.trim();
 
+        // Gửi phone kèm theo request
         await axios.post("http://localhost:8080/api/user/register", {
             username: fullName || "User", 
             email: email,
-            password: password
+            phone: phone, 
+            password: password,
         });
-        // Gọi hàm onSwitch để chuyển giao diện sang Login luôn
+
+        alert("Đăng ký thành công!");
         if(onSwitch) onSwitch(); 
 
     } catch (error) {
-        // <--- XỬ LÝ LỖI TỪ BACKEND TRẢ VỀ
         console.error("Lỗi đăng ký:", error);
         if (error.response && error.response.data) {
             alert(error.response.data); 
         } else {
-            alert("Lỗi kết nối Server. Vui lòng thử lại sau.");
-            console.log(error.response)
+            alert("Lỗi kết nối Server.");
         }
     }
   };
@@ -129,9 +147,9 @@ const Register = ({ onSwitch }) => {
       
       <form onSubmit={handleRegister} noValidate>
         
-        {/* Hàng Họ và Tên*/}
+        {/* HỌ TÊN */}
         <div className="name-row">
-          <div className="input-group half-width">
+          <div className="uth-input-group half-width">
             <label>Họ:</label>
             <input 
                 type="text" 
@@ -140,7 +158,7 @@ const Register = ({ onSwitch }) => {
                 onChange={(e) => setFirstName(e.target.value)} 
             />
           </div>
-          <div className="input-group half-width">
+          <div className="uth-input-group half-width">
             <label>Tên:</label>
             <input 
                 type="text" 
@@ -151,8 +169,8 @@ const Register = ({ onSwitch }) => {
           </div>
         </div>
 
-
-        <div className="input-group">
+        {/* EMAIL */}
+        <div className="uth-input-group">
           <label>Email:</label>
           <input 
             type="email" 
@@ -165,7 +183,25 @@ const Register = ({ onSwitch }) => {
           {emailError && <p className="error-message">{emailError}</p>}
         </div>
 
-        <div className="input-group">
+         {/* SỐ ĐIỆN THOẠI (ĐÃ SỬA) */}
+         <div className="uth-input-group">
+          <label>Số điện thoại:</label>
+          <input 
+            type="tel" 
+            value={phone} 
+            onChange={(e) => {
+                setPhone(e.target.value);
+                if(phoneError) validatePhone(e.target.value);
+            }}
+            onBlur={() => validatePhone(phone)}
+            className={phoneError ? "input-error" : ""}
+            placeholder="0912345678"
+          />
+          {phoneError && <p className="error-message">{phoneError}</p>}
+        </div>
+
+        {/* MẬT KHẨU */}
+        <div className="uth-input-group">
           <label>Mật khẩu:</label>
           <div className="password-relative-box">
             <input 
@@ -186,7 +222,8 @@ const Register = ({ onSwitch }) => {
           {passError && <p className="error-message">{passError}</p>}
         </div>
 
-        <div className="input-group">
+        {/* XÁC NHẬN MẬT KHẨU */}
+        <div className="uth-input-group">
           <label>Xác nhận mật khẩu:</label>
           <div className="password-relative-box">
             <input 
@@ -219,7 +256,7 @@ const Register = ({ onSwitch }) => {
           <span className="red-link" onClick={onSwitch}>Nhấn vào đây để đăng nhập</span>
         </div>
 
-        <a><button type="submit" className="btn-register">Đăng kí</button></a>
+        <button type="submit" className="btn-register">Đăng kí</button>
       </form>
     </div>
   );
