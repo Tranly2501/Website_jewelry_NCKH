@@ -41,7 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     status: DataTypes.JSON,
     create_at: DataTypes.DATE,
-    update_at: DataTypes.DATE
+    update_at: DataTypes.DATE,
+    // thêm trường : model_url 
+    model_url: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'products',

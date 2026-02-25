@@ -21,9 +21,9 @@ const webRoutes = require('./routes/web');
 
 const app = express();
 
-//  Mở cửa thư mục 'public/models' ra Internet
-app.use('/models', express.static(path.join(__dirname, 'public/models')));
-
+// ==========================================
+// 1. GỌI CORS LÊN TRƯỚC TIÊN 
+// ==========================================
 app.use(cors(
     {
         origin: [
@@ -35,13 +35,25 @@ app.use(cors(
     }
 ));
 
+// ==========================================
+// 2.  MỞ CỬA THƯ MỤC PUBLIC
+// ==========================================
+app.use('/models', express.static(path.join(__dirname, 'public/models'), {
+    // Ép thêm Header CORS cho mọi file tĩnh (ảnh, 3D) được gửi đi từ thư mục này
+    setHeaders: function (res, path, stat) {
+        res.set('Access-Control-Allow-Origin', '*'); // Cho phép tất cả các web lấy file
+        res.set('Access-Control-Allow-Methods', 'GET');
+        res.set('Access-Control-Allow-Headers', 'Content-Type');
+    }
+}));
+// ==========================================
+// 3. CÁC CẤU HÌNH KHÁC VÀ ROUTES
+// ==========================================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 3. KHAI BÁO CÁC ROUTES
 app.use('/api/user', authRoutes);
 
-// --- THÊM ĐOẠN NÀY VÀO TRƯỚC DÒNG app.listen ---
 console.log("Đang đăng ký route test...");
 app.use('', webRoutes);
 
