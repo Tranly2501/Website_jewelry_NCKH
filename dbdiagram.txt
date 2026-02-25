@@ -1,0 +1,89 @@
+Table users{
+  id int [primary key]
+  username nvarchar
+  email varchar
+  password varchar
+  avatar varchar
+  phone int
+  create_at datetime
+  update_at datetime
+}
+Table categories{
+  id int [primary key]
+  name varchar
+  image text
+}
+Table products{
+  id int [primary key]
+  name varchar
+  descriptions varchar
+  price numeric(12,0)
+  oldprice numeric(12,0)
+  category_id int
+  specification varchar
+  image_url text
+  byturn int // xem số lượng bao nhiêu lần sản phẩm được mua
+  quantity int
+  create_at datetime
+  update_at datetime
+}
+ref: "categories"."id"< "products"."category_id" // một danh mục sản phẩm có thể có nhiều sản phẩm, 1 sản phẩm chỉ thuộc một danh mục - quan hệ (1,n)
+Table Feedback{
+  id int [primary key]
+  product_id int
+  user_id int
+  start int
+  context text
+  create_at datetime
+  update_at datetime
+}
+Ref: "Feedback"."product_id" > "products"."id"
+Ref: "Feedback"."user_id" > "users"."id"
+table orders{
+  id int [primary key]
+  user_id int
+  status varchar
+  note text
+  totalPrice int
+  create_at datetime
+  update_at datetime
+}
+Ref: "orders"."user_id" > "users"."id"
+Table order_detail{
+  id int [primary key]
+  order_id int 
+  product_id int
+  price numeric(12,0)
+  quantity int
+  create_at datetime
+  update_at datetime
+}
+// order_detail hiểu như sau: trong 1 order có nhiều product được mua, mỗi một product có 1 số lượng khác nhau thì order_detail ~ thông tin 1 product
+Ref: "order_detail"."order_id" > "orders"."id"
+Ref: "order_detail"."product_id">"products"."id"
+table favorite{
+  id int [primary key]
+  product_id int
+  user_id int
+  create_at đatetime
+  update_at datetime
+}
+Ref: "favorite"."product_id" > "products"."id"
+Ref: "favorite"."user_id"> "users"."id"
+Table banner{
+  id int [primary key]
+  name varchar
+  image text
+  status int // trạng thái hiển thị hay ẩn đi
+  create_at datetime
+  update_at datetime
+}
+Table banner_detail{
+  id int [primary key]
+  product_id int
+  banner_id int // trạng thái hiển thị hay ẩn đi
+  create_at datetime
+  update_at datetime
+}
+ref: "banner_detail"."product_id" > "products"."id"
+ref: "banner_detail"."banner_id" > "banner"."id"

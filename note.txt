@@ -1,0 +1,9 @@
+file controller: nơi chưa logic xử lý chính 
+    + authController: xử lý đăng ký, đăng nhập
+    + userController: lấy thông tin profile, lịch sử mua hàng
+file routes: nơi định nghĩa đường dẫn dẫn API
+    + auth: định nghĩa (/register , /login)
+    +web: gộp tất cả các route
+
+file middleware: nới kiểm tra bảo mật 
+    + authMiddleware: kiểm tra xem user đã đăng nhập chưa bằng JWT ( json web token -ột tiêu chuẩn mở (RFC 7519) dùng để truyền tải thông tin an toàn giữa các bên (thường là client và server) dưới dạng một chuỗi JSON được ký điện tử. JWT thường dùng để xác thực và ủy quyền, cho phép máy chủ kiểm tra tính hợp lệ của người dùng mà không cần lưu trữ trạng thái phiên (stateless).  )
