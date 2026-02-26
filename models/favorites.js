@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'favorites',
     tableName: 'favorites',
     underscoredl: true,
+    timestamps: true,
     createdAt: 'create_at',
     updatedAt: 'update_at'
   });
