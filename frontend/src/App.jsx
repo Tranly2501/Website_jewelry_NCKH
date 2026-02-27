@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Header from '../src/components/Header/Header.jsx'
@@ -17,22 +18,28 @@ import Admin from './pages/Admin/Admin.jsx'
 import Wishlist from './pages/Wishlist/Wishlist.jsx';
 import Cart from './pages/Cart/Cart.jsx';
 import ProductDetail from './pages/Category/ProductDetail.jsx';
-import Checkout from './components/Cart/Checkout/Checkout.jsx'; // Thêm dòng này ở nhóm các dòng import
+import Checkout from './components/Cart/Checkout/Checkout.jsx'; 
 import Confirm from "./components/Cart/Confirm/Confirm.jsx";
 
 const App = () => {
     const location = useLocation(); 
-   // danh sách các trang muốn ẩn policy
-  const hidePolicyRoutes = ['/Cart', '/Account', '/Admin','/checkout', '/','/confirm'];
-  const isHidden = hidePolicyRoutes.includes(location.pathname);
+    
+    // 2. TẠO STATE LƯU TÊN SẢN PHẨM Ở ĐÂY
+    const [productName, setProductName] = useState("");
 
-  // danh sách các trang muốn ẩn breadcrumb
-  const hideBreadcrumbRoutes = ['/','/Admin','/checkout','/confirm'];
-  const isHiddenBreadcrumb = hideBreadcrumbRoutes.includes(location.pathname);
- return (
+    // danh sách các trang muốn ẩn policy
+    const hidePolicyRoutes = ['/Cart', '/Account', '/Admin','/checkout', '/','/confirm'];
+    const isHidden = hidePolicyRoutes.includes(location.pathname);
+
+    // danh sách các trang muốn ẩn breadcrumb
+    const hideBreadcrumbRoutes = ['/','/Admin','/checkout','/confirm'];
+    const isHiddenBreadcrumb = hideBreadcrumbRoutes.includes(location.pathname);
+
+    return (
         <>
         <Header />
-            {!isHiddenBreadcrumb && <Breadcrumb />}
+            {/* 3. Truyền tên sản phẩm vào Breadcrumb */}
+            {!isHiddenBreadcrumb && <Breadcrumb productName={productName} />}
             <div className ='container'>
                 <Routes>
                     <Route path='/' element ={<Home />}/> 
@@ -46,9 +53,12 @@ const App = () => {
                     <Route path='/Admin' element = {<Admin />} />
                     <Route path='/Wishlist' element = {<Wishlist />} />
                     <Route path='/Cart' element = {<Cart />} />
-                    <Route path='/ProductDetail' element = {<ProductDetail />} />
-                     <Route path="/checkout" element={<Checkout />} />
-                     <Route path="/confirm" element={<Confirm />} />
+                    
+                    {/* 4. Truyền hàm set tên sản phẩm cho trang Detail */}
+                    <Route path='/product/:id' element = {<ProductDetail setProductName={setProductName} />} />
+                    
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/confirm" element={<Confirm />} />
                 </Routes>
             </div>
         {!isHidden && <Policy />}
@@ -56,4 +66,4 @@ const App = () => {
         </>
     );
 };
-export default App
+export default App;

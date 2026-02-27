@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Blog.css';
 import { FaCalendarAlt, FaUser, FaFacebookF, FaTwitter, FaPinterest } from 'react-icons/fa';
-import {products} from "../../data/product.js";
+
+// Import hàm biến đổi dữ liệu quen thuộc
+import { transformProduct } from "../../util/transformProduct.js";
 
 const Blog = () => {
-    const suggestedProducts = products.slice(0, 3);
+  // 1. TẠO STATE LƯU TRỮ DỮ LIỆU TỪ API
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // 2. FETCH DỮ LIỆU SẢN PHẨM KHI TRANG VỪA LOAD
+  useEffect(() => {
+    const fetchSuggestedProducts = async () => {
+      try {
+        setIsLoading(true);
+        // Gọi API lấy toàn bộ sản phẩm (Bạn có thể đổi URL nếu có API riêng cho sản phẩm nổi bật)
+        const response = await axios.get("http://localhost:8080/get-all-products");
+        
+        const rawData = response.data.products || response.data || [];
+
+        // Lấy 3 sản phẩm đầu tiên và dùng transformProduct để format lại hình ảnh, giá...
+        const formattedData = rawData.slice(0, 3).map(item => transformProduct(item));
+        
+        setSuggestedProducts(formattedData);
+      } catch (error) {
+        console.error("Lỗi tải sản phẩm gợi ý:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSuggestedProducts();
+  }, []);
 
   // Hàm format tiền tệ
   const formatCurrency = (amount) => {
@@ -100,23 +129,26 @@ const Blog = () => {
          <div className="sidebar-widget product-widget">
             <h3 className="widget-title">SẢN PHẨM GỢI Ý</h3>
             
-            {/* Map dữ liệu từ biến suggestedProducts */}
-            {suggestedProducts.map((product) => (
-              <div className="mini-product-card" key={product.id}>
-                <img 
-                  src={product.images ? product.images[0] : (product.image || "https://placehold.co/80")} 
-                  alt={product.name} 
-                />
-                
-                <div className="mini-info">
-                  {/* Tên sản phẩm */}
-                  <h4>{product.name}</h4>
-                  
-                  {/* Giá tiền đã format */}
-                  <p>{formatCurrency(product.price)}</p>
-                </div>
-              </div>
-            ))}
+            {/* 3. HIỂN THỊ LOGIC TỪ API */}
+            {isLoading ? (
+               <p style={{ textAlign: "center", color: "#666", padding: "10px" }}>Đang tải...</p>
+            ) : suggestedProducts.length > 0 ? (
+               suggestedProducts.map((product) => (
+                 <div className="mini-product-card" key={product.id}>
+                   <img 
+                     src={product.images ? product.images[0] : (product.image || "https://placehold.co/80")} 
+                     alt={product.name} 
+                   />
+                   
+                   <div className="mini-info">
+                     <h4>{product.name}</h4>
+                     <p>{formatCurrency(product.price)}</p>
+                   </div>
+                 </div>
+               ))
+            ) : (
+               <p style={{ textAlign: "center", color: "#666" }}>Chưa có sản phẩm gợi ý.</p>
+            )}
 
           </div>
 

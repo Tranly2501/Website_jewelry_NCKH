@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useMemo } from "react";
+
+import axios from "axios";
 import LayoutGrid from "../../components/product/layoutGrid/LayoutGrid";
-import Pagination from "../../components/Pagination.jsx";
-import Policy from "../../components/Polycy/Policy.jsx";
-// import FilterProduct from "../../components/FilterProduct/FilterProduct.jsx"
+import Pagination from "../../components/Pagination.jsx"; 
 
 import filterIcon from "../../assets/filter.svg";
 import sortIcon from "../../assets/arrow_down.svg";
@@ -12,7 +12,8 @@ import vongTayImg from "../../assets/images/vongTay.png";
 import boImg from "../../assets/images/id6.png";
 import otherImg from "../../assets/images/id10_4.png";
 
-import { products as allProducts } from "../../data/product";
+import { transformProduct } from "../../util/transformProduct.js";
+
 import "./Category.css";
 
 /* ================= COLLECTIONS ================= */
@@ -28,6 +29,7 @@ const PAGE_SIZE = 8;
 
 const Category = () => {
   /* ================= STATE ================= */
+  const [allProducts, setAllProducts] = useState([]);
   const [activeCollection, setActiveCollection] = useState("all");
   const [sortValue, setSortValue] = useState("Sắp xếp");
   const [openSort, setOpenSort] = useState(false);
@@ -35,6 +37,23 @@ const Category = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const sortRef = useRef(null);
+
+  /* ================= render api product ================= */
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/get-all-products");
+        const rawData = response.data.products || response.data || [];
+
+        // Chuyển đổi dữ liệu từ API sang định dạng mà UI cần
+        const formattedData = rawData.map (item => transformProduct(item));
+        setAllProducts(formattedData)
+      } catch (err) {
+        console.error("Lỗi tải danh mục:", err);
+      }
+    };
+    fetchProducts();
+  },[])
 
   /* ================= CLICK OUTSIDE SORT ================= */
   useEffect(() => {
@@ -52,9 +71,9 @@ const Category = () => {
   const filteredProducts = useMemo(() => {
     if (activeCollection === "all") return allProducts;
     return allProducts.filter(
-      (p) => p.category === activeCollection
+      (p) => p.categoryId === activeCollection
     );
-  }, [activeCollection]);
+  }, [activeCollection,allProducts]);
 
   /* ================= SORT ================= */
   const sortedProducts = useMemo(() => {

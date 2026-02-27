@@ -1,57 +1,151 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import "../Category/productDetail.css";
-import { Link } from 'react-router-dom';
-// import '../../index.css'; // Nếu cần
-import Polycy from '../../components/Polycy/Policy.jsx';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+
+// Import các công cụ và component bổ trợ
+import { transformProduct } from "../../util/transformProduct.js";
+
 import RelatedProducts from '../../components/product/RelatedProducts/RelatedProducts.jsx';
-import { products } from '../../data/product.js';
 
-import Like from '../../assets/heart.svg'
-import fullScreen from '../../assets/fullScreen.svg'
+// Import assets
+import Like from '../../assets/heart.svg';
+import fullScreen from '../../assets/fullScreen.svg';
 
-function ProductDetail() {
-  const product = products[1]; 
-  const [mainImage, setMainImage] = useState(product ? product.images[0] : null);
+function ProductDetail({ setProductName }) {
+  const { id } = useParams();
+  // 1. KHỞI TẠO STATE
+  const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [mainImage, setMainImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("16 cm");
-  
-  // 1. STATE QUẢN LÝ TAB ĐANG MỞ
   const [activeTab, setActiveTab] = useState("description");
 
-  const sizes = product.sizes || [];
 
+  // 2. GỌI API LẤY CHI TIẾT SẢN PHẨM
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setIsLoading(true);
+        window.scrollTo(0, 0);
+        const response = await axios.get(`http://localhost:8080/get-product/${id}`);
+
+        // GIẢI PHÁP: Tự động tìm object thực tế (responseData.product)
+        const responseData = response.data;
+        const actualData = responseData.product || responseData.data || responseData;
+
+        if (actualData && (actualData.name || actualData.id)) {
+          const formattedProduct = transformProduct(actualData);
+          setProduct(formattedProduct);
+          // Gán ảnh đầu tiên làm ảnh chính khi vừa load xong
+          if (formattedProduct.images && formattedProduct.images.length > 0) {
+            setMainImage(formattedProduct.images[0]);
+          }
+    // 2. BƯỚC MỚI: Bắn tên sản phẩm ngược lên App.jsx cho Breadcrumb hiển thị
+          if (setProductName) {
+            setProductName(formattedProduct.name);
+          }
+        } else {
+          setProduct(null);
+        }
+      } catch (err) {
+        console.error("Lỗi API:", err);
+        setProduct(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
+    }
+  // Dọn dẹp tên sản phẩm khi người dùng rời khỏi trang chi tiết
+    return () => {
+      if (setProductName) {
+        setProductName("");
+      }
+    };
+  }, [id, setProductName]);
+
+  // 3. CÁC HÀM XỬ LÝ SỰ KIỆN
   const handleQuantity = (type) => {
     if (type === 'dec' && quantity > 1) setQuantity(quantity - 1);
     if (type === 'inc') setQuantity(quantity + 1);
   };
 
-  if (!product) return <div>Không tìm thấy sản phẩm</div>;
+   const handleAddToFavorite = async (e, productId) =>{
+    e.preventDefault();   // Ngăn thẻ <Link> chuyển trang
+    e.stopPropagation();  // Ngăn sự kiện nổi bọt lên các thẻ cha
+    try {
+      // LẤY THÔNG TIN USER TỪ TRÌNH DUYỆT (LOCALSTORAGE)
+        const storedUser = localStorage.getItem('currentUser');
+
+        // KIỂM TRA: Nếu chưa đăng nhập thì không cho gọi API
+        if (!storedUser) {
+           alert("Vui lòng đăng nhập để sử dụng tính năng này!");
+           return;
+        }
+        const userData = JSON.parse(storedUser);
+        const userId = userData.id;
+
+      // 2. Gọi API POST lên Backend
+        const response = await axios.post('http://localhost:8080/add-to-favorite', {
+          user_id: userId,
+          product_id: productId
+        });
+
+        if (response.data.errCode === 0) {
+          alert("Đã thêm vào danh sách yêu thích!");
+        } 
+
+      } catch (error) {
+        console.error("Lỗi thêm yêu thích:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+  }
+};
+
+
+  
+
+  // 4. KIỂM TRA TRẠNG THÁI (GARDEN CLAUSES)
+if (isLoading) return <div style={{ textAlign: "center", padding: "100px" }}>Đang tải...</div>;
+  if (!product) return <div style={{ textAlign: "center", padding: "100px" }}>Sản phẩm không tồn tại!</div>;
+
+  // TÍNH TOÁN AN TOÀN
+  const safeRating = Math.max(0, Math.min(5, Math.round(product.rating || 5)));
 
   return (
+    <>
+        
     <div className="page-container">
-      {/* ---  GALLERY & INFO --- */}
+
+      {/* --- GALLERY & INFO --- */}
       <div className="product-wrapper">
         
         {/* Gallery */}
         <div className="product-gallery">
           <div className="gallery-main">
-            <img src={mainImage} alt={product.name} />
+            <img 
+              src={mainImage || product.image} 
+              alt={product.name} 
+            />
             <div className="overlay-icons">
-               <img src={Like} alt="like" className="icon" />
+               <img src={Like} alt="like" className="icon"  onClick={(e) => handleAddToFavorite(e, product.id)}/>
                <img src={fullScreen} alt="fullscreen" className="icon" />
             </div>
           </div>
 
           <div className="thumbnail-list">
-              {product.images.map((imgSrc, index) => (
-                <div
-                  key={index}
-                  className={`thumbnail-item ${mainImage === imgSrc ? "active" : ""}`}
-                  onClick={() => setMainImage(imgSrc)}
-                >
-                  <img src={imgSrc} alt={`thumb-${index}`} />
-                </div>
-              ))}
+            {product.images.map((imgSrc, index) => (
+              <div
+                key={index}
+                className={`thumbnail-item ${mainImage === imgSrc ? "active" : ""}`}
+                onClick={() => setMainImage(imgSrc)}
+              >
+                <img src={imgSrc} alt={`thumb-${index}`} />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -61,31 +155,29 @@ function ProductDetail() {
           
           <div className="rating-row">
             <span className="stars">
-              {"★".repeat(product.rating || 5)}
-              {"☆".repeat(5 - (product.rating || 5))}
+              {"★".repeat(safeRating)}
+              {"☆".repeat(5 - safeRating)}
             </span>
+            <span className="review-count"> ({product.reviewCount} đánh giá)</span>
           </div>
 
-          <div className="price">{Number(product.price).toLocaleString()} ₫</div>
-          
+          <div className="price">{product.price.toLocaleString('vi-VN')} ₫</div>
           <p className="description">{product.description}</p>
           
           <div className="attribute-line">
             <strong>Chất liệu: </strong>
-            <span className="gold-text ">{product.material}</span>
+            <span className="gold-text ">{product.material || "Đang cập nhật"}</span>
           </div>
 
           <div className="attribute-block">
             <strong>Kích thước:</strong>
             <div className="size-options">
-              {sizes.map((size) => (
+            {product.sizes.map((size) => (
                 <button
                   key={size}
                   className={`btn-size ${selectedSize === size ? "selected" : ""}`}
                   onClick={() => setSelectedSize(size)}
-                >
-                  {size}
-                </button>
+                >{size}</button>
               ))}
             </div>
           </div>
@@ -101,16 +193,15 @@ function ProductDetail() {
 
           <div className="action-buttons">
             <button className="btn-add-cart">Thêm vào giỏ hàng</button>
-            <Link to="/AR">
-              <button className="btn-ar">Trải nghiệm Ar</button>
-            </Link>
+          <Link to="/AR" state={{ productData: product }}>
+            <button className="btn-ar">Trải nghiệm AR</button>
+          </Link>
           </div>
         </div>
       </div>
 
-      {/* ---  TABS CHI TIẾT --- */}
+      {/* --- TABS CHI TIẾT --- */}
       <div className="product-detail-section">
-        {/* Header Tabs */}
         <div className="tab-headers">
           <button 
             className={`tab-btn ${activeTab === "description" ? "active" : ""}`}
@@ -132,25 +223,19 @@ function ProductDetail() {
           </button>
         </div>
 
-        {/* Content Tabs */}
         <div className="tab-content-container">
-          
-          {/* TAB 1: MÔ TẢ (Giữ nguyên hoặc tùy chỉnh) */}
           {activeTab === "description" && (
             <div className="tab-pane fade-in">
               <div className="description-box">
-                <p >
-                  {product.descriptionDetail}
-                </p>
+                <p>{product.descriptionDetail || "Chưa có mô tả chi tiết cho sản phẩm này."}</p>
               </div>
             </div>
           )}
           
-          {/* TAB 2: THÔNG SỐ */}
           {activeTab === "specifications" && (
             <div className="tab-pane fade-in">
               <div className="specs-table">
-               {product.specifications && product.specifications.length > 0 ? (
+                {product.specifications && product.specifications.length > 0 ? (
                   product.specifications.map((item, index) => (
                     <div className="spec-row" key={index}>
                       <span className="spec-label">{item.label}</span>
@@ -164,13 +249,11 @@ function ProductDetail() {
             </div>
           )}
 
-          {/* TAB 3: ĐÁNH GIÁ */}
           {activeTab === "reviews" && (
             <div className="tab-pane fade-in">
               <div className="review-form-container">
                 <h3 className="review-heading">Hãy Là Người Đầu Tiên Đánh Giá Sản Phẩm</h3>
-                
-             <form className="review-form">
+                <form className="review-form">
                     <div className="form-group">
                         <textarea className="form-control" rows="5" placeholder="Đánh giá của bạn *"></textarea>
                     </div>
@@ -182,7 +265,6 @@ function ProductDetail() {
                             <input type="email" className="form-control" placeholder="Email *" />
                         </div>
                     </div>
-                    <span> Địa chỉ email của quý khách sẽ được bảo mật và không công bố. Những trường thông tin bắt buộc sẽ được đánh dấu * </span>
                     <button type="button" className="btn-submit-review">ĐÁNH GIÁ</button>
                 </form>
               </div>
@@ -191,11 +273,10 @@ function ProductDetail() {
         </div>
       </div>
 
-        {/* ---  CÁC SẢN PHẨM LIÊN QUAN --- */}
-          <RelatedProducts />
-      <Polycy />
+      <RelatedProducts currentProductId={id} />
     </div>
-  )   
+    </>
+  );
 }
 
-export default ProductDetail
+export default ProductDetail;

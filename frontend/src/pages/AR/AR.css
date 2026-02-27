@@ -257,7 +257,7 @@ border: 1px solid var(--border-color);
 .ar-product-card.selected {
   border-color: transparent;
   background-color: #fafafa;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.15);
 }
 
 .ar-card-img {

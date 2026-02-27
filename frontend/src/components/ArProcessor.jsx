@@ -1,4 +1,3 @@
-// src/components/AR/ARProcessor.js
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Hands } from '@mediapipe/hands';
@@ -43,7 +42,8 @@ export class ARProcessor {
     this.scene.add(ambientLight, dirLight);
 
     // 2. Setup Debug Points (21 điểm landmark)
-    const pointGeometry = new THREE.SphereGeometry(0.02,8 , 8);
+    // LƯU Ý: Thường ở production ta nên để màu trong suốt hoặc ẩn đi
+    const pointGeometry = new THREE.SphereGeometry(0.02, 8, 8);
     const pointMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00, roughness: 0.0 });
     for (let i = 0; i < 21; i++) {
       const point = new THREE.Mesh(pointGeometry, pointMaterial);
@@ -64,7 +64,7 @@ export class ARProcessor {
       minTrackingConfidence: 0.7
     });
 
-    this.hands.onResults(this.onResults.bind(this)); // Bind 'this' để dùng trong hàm
+    this.hands.onResults(this.onResults.bind(this)); 
 
     // 4. Setup Camera Utils
     if (this.videoElement) {
@@ -72,7 +72,7 @@ export class ARProcessor {
         onFrame: async () => {
           if (this.isRunning) await this.hands.send({ image: this.videoElement });
         },
-        width: 1280, // Độ phân giải camera input
+        width: 1280, 
         height: 720
       });
     }
@@ -80,9 +80,16 @@ export class ARProcessor {
 
   // --- HÀM LOAD MODEL TỪ UI GỌI VÀO ---
   loadModel(glbPath) {
-    if (!glbPath) return;
+    // TỐI ƯU 1: Nếu truyền vào path rỗng (Sản phẩm không có 3D) -> Xóa nhẫn cũ và Dừng lại
+    if (!glbPath) {
+      if (this.ring) {
+        this.scene.remove(this.ring);
+        this.ring = null;
+      }
+      return; 
+    }
 
-    // Xóa model cũ nếu có
+    // Xóa model cũ nếu đang có
     if (this.ring) {
       this.scene.remove(this.ring);
       this.ring = null;
@@ -106,54 +113,67 @@ export class ARProcessor {
 
       this.ring.visible = false;
       this.scene.add(this.ring);
-      console.log("Đã load model:", glbPath);
+      console.log("Đã load model thành công:", glbPath);
+    }, undefined, (error) => {
+      console.error("Lỗi khi load model 3D:", error);
     });
   }
 
   // --- LOGIC XỬ LÝ (Loop) ---
   onResults(results) {
-    // Ẩn tất cả trước khi tính toán
-    if (this.ring) this.ring.visible = false;
+    // TỐI ƯU 2: GUARD CLAUSE
+    // Nếu hiện tại không có mô hình nhẫn (this.ring = null) -> Ẩn mọi thứ và KHÔNG TÍNH TOÁN NỮA
+    if (!this.ring) {
+        this.landmarkPoints.forEach(p => p.visible = false);
+        // Vẫn phải render scene trống để khung hình camera không bị đứng
+        if (this.renderer && this.scene && this.camera) {
+            this.renderer.render(this.scene, this.camera);
+        }
+        return; // Dừng hàm tại đây, máy sẽ chạy rất nhẹ
+    }
+
+    // Tự động ẩn nhẫn nếu không thấy tay
+    this.ring.visible = false;
+    // Ẩn các điểm xanh (Chỉ bật lên khi thực sự tìm thấy tay)
     this.landmarkPoints.forEach(p => p.visible = false);
 
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
       const landmarks = results.multiHandLandmarks[0];
       
-      // Tính aspect ratio
       const videoWidth = this.videoElement.videoWidth || 1;
       const videoHeight = this.videoElement.videoHeight || 1;
       const aspectRatio = videoWidth / videoHeight;
 
-      // 1. Cập nhật 21 điểm landmark (Logic của bạn)
-      for(let i=0; i<landmarks.length; i++){
+      // 1. Cập nhật 21 điểm landmark 
+       for(let i=0; i<landmarks.length; i++){
         const lm = landmarks[i];
         const x = ((lm.x - 0.5) * 2 * aspectRatio) + 0.03;
-        const y = -(lm.y - 0.5) * 2; // Đã bỏ aspectRatio ở Y theo chuẩn ThreeJS, hoặc bạn nhân vào nếu muốn giữ logic cũ
+        const y = -(lm.y - 0.5) * 2; 
         const z = -lm.z;
         
         this.landmarkPoints[i].position.set(x, y, z);
-        this.landmarkPoints[i].visible = true;
+        this.landmarkPoints[i].visible = true; // Bật dòng này nếu muốn test
       }
+      
 
       // 2. Cập nhật vị trí Nhẫn
-      if (this.ring) {
-        this.ring.visible = true;
-        const lm9 = landmarks[9];
-        const lm10 = landmarks[10];
+      this.ring.visible = true; // Bật hiển thị nhẫn vì đã tìm thấy tay
+      
+      const lm9 = landmarks[9];
+      const lm10 = landmarks[10];
 
-        const midX = (lm9.x + lm10.x) / 2;
-        const midY = (lm9.y + lm10.y) / 2;
-        const midZ = (lm9.z + lm10.z) / 2;
+      const midX = (lm9.x + lm10.x) / 2;
+      const midY = (lm9.y + lm10.y) / 2;
+      const midZ = (lm9.z + lm10.z) / 2;
 
-        const x = (midX - 0.5) * 2 * aspectRatio;
-        const y = -(midY - 0.5) * 2; 
-        const z = -midZ;
+      const x = (midX - 0.5) * 2 * aspectRatio;
+      const y = -(midY - 0.5) * 2; 
+      const z = -midZ;
 
-        this.ring.position.set(x, y, z);
-        
-        // Bonus: Xoay nhẫn theo hướng ngón tay (Logic Quaternion)
-        // ... bạn có thể thêm lại logic xoay container ở đây nếu muốn
-      }
+      this.ring.position.set(x, y, z);
+      
+      // Bonus: Xoay nhẫn theo hướng ngón tay 
+      // ... 
     }
 
     // Render 
