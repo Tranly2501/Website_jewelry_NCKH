@@ -291,12 +291,13 @@ const handleAddToCart = async (e,product) => {
                 )}
 
                 <video 
+                
                   ref={videoRef} 
                   autoPlay 
                   playsInline 
                   muted 
                   className="live-video"
-                  style={{ 
+                  style={{  display: 'none',
                       position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
                       objectFit: 'cover', transform: 'scaleX(-1)', zIndex: 1
                   }}
