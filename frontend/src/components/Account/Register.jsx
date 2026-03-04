@@ -107,7 +107,7 @@ const Register = ({ onSwitch }) => {
     
     // Validate toàn bộ trước khi gửi
     const isEmailValid = validateEmail(email);
-    const isPhoneValid = validatePhone(phone); // <--- CHECK PHONE
+    const isPhoneValid = validatePhone(phone); 
     const isPassValid = validatePassword(password);
     const isConfirmValid = validateConfirmPassword(password, confirmPassword);
 
@@ -120,6 +120,8 @@ const Register = ({ onSwitch }) => {
 
         // Gửi phone kèm theo request
         await axios.post("http://localhost:8080/api/user/register", {
+            firstName:firstName,
+            lastName: lastName,          
             username: fullName || "User", 
             email: email,
             phone: phone, 

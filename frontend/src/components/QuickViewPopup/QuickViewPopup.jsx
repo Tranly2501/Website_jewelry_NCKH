@@ -30,10 +30,8 @@ export default function QuickViewPopup({ product, onClose }) {
         const storedUser = localStorage.getItem('currentUser');
 
         // KIỂM TRA: Nếu chưa đăng nhập thì không cho gọi API
-        if (!storedUser) {
-           alert("Vui lòng đăng nhập để sử dụng tính năng này!");
-           return;
-        }
+        if (storedUser) {
+           
         const userData = JSON.parse(storedUser);
         const userId = userData.id;
 
@@ -43,12 +41,24 @@ export default function QuickViewPopup({ product, onClose }) {
           product_id: productId
         });
 
-        if (response.data.errCode === 0) {
+          if (response.data.errCode === 0) {
           alert("Đã thêm vào danh sách yêu thích!");
-        } else if (response.data.errCode === 2) {
-          alert("Sản phẩm này đã có trong danh sách rồi!");
-        }
+        }  else return;
+      } 
+      else {
+        // Lấy danh sách cũ ra (nếu chưa có thì tạo mảng rỗng)
+            let guestFavorites = JSON.parse(localStorage.getItem('guestFavorites')) || [];
 
+            // Kiểm tra xem ID sản phẩm đã có trong mảng chưa
+            if (guestFavorites.includes(productId)) {
+                alert(" Sản phẩm này đã có trong danh sách rồi!");
+            } else {
+                // Thêm ID mới vào mảng và lưu lại
+                guestFavorites.push(productId);
+                localStorage.setItem('guestFavorites', JSON.stringify(guestFavorites));
+                alert(" Đã lưu tạm vào mục Yêu thích (Hãy đăng nhập để lưu vĩnh viễn nhé)!");
+            }
+      }
       } catch (error) {
         console.error("Lỗi thêm yêu thích:", error);
         alert("Có lỗi xảy ra, vui lòng thử lại!");

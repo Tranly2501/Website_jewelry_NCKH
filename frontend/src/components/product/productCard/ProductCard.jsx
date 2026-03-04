@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {useCart} from "../../../util/CartContenxt.jsx"
 import "./ProductCard.css";
 import QuickViewPopup from "../../QuickViewPopUp/QuickViewPopUp.jsx";
 
 export default function ProductCard({ product }) {
   const [showQuickView, setShowQuickView] =useState(false);
+   const { addToCartSuccess } = useCart();
 
   const formatPrice = (price) => { 
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
@@ -32,7 +34,7 @@ export default function ProductCard({ product }) {
     }
   };
 
-  const handleAddToFavorite = async (e, productId) =>{
+   const handleAddToFavorite = async (e, productId) =>{
     e.preventDefault();   // Ngăn thẻ <Link> chuyển trang
     e.stopPropagation();  // Ngăn sự kiện nổi bọt lên các thẻ cha
     try {
@@ -40,10 +42,8 @@ export default function ProductCard({ product }) {
         const storedUser = localStorage.getItem('currentUser');
 
         // KIỂM TRA: Nếu chưa đăng nhập thì không cho gọi API
-        if (!storedUser) {
-           alert("Vui lòng đăng nhập để sử dụng tính năng này!");
-           return;
-        }
+        if (storedUser) {
+           
         const userData = JSON.parse(storedUser);
         const userId = userData.id;
 
@@ -55,14 +55,52 @@ export default function ProductCard({ product }) {
 
         if (response.data.errCode === 0) {
           alert("Đã thêm vào danh sách yêu thích!");
-        }
+        } 
+      } 
+      else {
+        // Lấy danh sách cũ ra (nếu chưa có thì tạo mảng rỗng)
+            let guestFavorites = JSON.parse(localStorage.getItem('guestFavorites')) || [];
 
+            // Kiểm tra xem ID sản phẩm đã có trong mảng chưa
+            if (guestFavorites.includes(productId)) {
+                alert(" Sản phẩm này đã có trong danh sách rồi!");
+            } else {
+                // Thêm ID mới vào mảng và lưu lại
+                guestFavorites.push(productId);
+                localStorage.setItem('guestFavorites', JSON.stringify(guestFavorites));
+                alert(" Đã lưu tạm vào mục Yêu thích (Hãy đăng nhập để lưu vĩnh viễn nhé)!");
+            }
+      }
       } catch (error) {
         console.error("Lỗi thêm yêu thích:", error);
         alert("Có lỗi xảy ra, vui lòng thử lại!");
   }
 };
 
+  const handleQuickAddToCart = async (e) =>{
+     e.preventDefault();   // Ngăn thẻ <Link> chuyển trang
+    e.stopPropagation();  // Ngăn sự kiện nổi bọt lên các thẻ cha
+    try {
+       const storedUser = localStorage.getItem('currentUser');
+
+        const userData = JSON.parse(storedUser);
+        const userId = userData.id;
+        
+        const response = await axios.post('http://localhost:8080/add-to-cart', {
+        user_id: userId,
+        product_id: product.id,
+        quantity: 1,
+        size: "16", // Size mặc định khi mua nhanh
+        price: product.price
+      });
+
+      if (response.data.errCode === 0) {
+        addToCartSuccess(1);
+      }
+    } catch(error)
+    {console.log( error);
+      alert("Không thể thêm vào giỏ!");}
+  }
   return ( 
     <>
     <Link to={`/product/${product.id}`} className="product-card-link">
@@ -98,7 +136,7 @@ export default function ProductCard({ product }) {
           {/* Nút Add To Cart ở đáy */}
           <button 
             className="hover-add-to-cart-btn" 
-            onClick={(e) => handleActionClick(e, 'cart')}
+            onClick={handleQuickAddToCart}
           >
             Thêm vào giỏ hàng
           </button>

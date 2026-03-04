@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; 
-import { useLocation } from 'react-router-dom'; // 1. THÊM IMPORT useLocation
+import { useLocation, useNavigate } from 'react-router-dom'; // 1. THÊM IMPORT useLocation
 import { transformProduct } from "../../util/transformProduct.js"; 
+import {useCart} from '../../util/CartContenxt.jsx';
 
 import { ARProcessor } from '../../components/ArProcessor.jsx';
 import "./AR.css";
@@ -13,6 +14,8 @@ import iconWishlist from "../../assets/heart.svg";
 import iconCart from "../../assets/cart.svg";
 
 const AR = () => {
+  const navigate = useNavigate();
+   const { addToCartSuccess } = useCart();
   // 2. KHỞI TẠO location ĐỂ NHẬN DỮ LIỆU
   const location = useLocation();
   const incomingProduct = location.state?.productInfo;
@@ -24,6 +27,12 @@ const AR = () => {
   //--STATE CHO API --
   const [allProducts, setAllProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // --- STATE FULLSCREEN ---
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  // --- REF CHO KHUNG CAMERA ---
+  const cameraViewRef = useRef(null); // Dùng để xác định khu vực nào sẽ phóng to
 
   // --- CAMERA LOGIC ---
   const videoRef = useRef(null);
@@ -156,6 +165,106 @@ const AR = () => {
     (p) => p.isAR === true && p.categoryId === activeCategory
   );
 
+  // --- HÀM XỬ LÝ PHÓNG TO / THU NHỎ MÀN HÌNH ---
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      // Nếu chưa phóng to -> Bật Fullscreen cho khung camera
+      if (cameraViewRef.current?.requestFullscreen) {
+        cameraViewRef.current.requestFullscreen();
+      }
+    } else {
+      // Nếu đang phóng to -> Thoát Fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
+  // (Tùy chọn) Lắng nghe sự kiện người dùng bấm nút ESC trên bàn phím để thu nhỏ
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+     const handleAddToFavorite = async (e, productId) =>{
+    e.preventDefault();   // Ngăn thẻ <Link> chuyển trang
+    e.stopPropagation();  // Ngăn sự kiện nổi bọt lên các thẻ cha
+    try {
+      // LẤY THÔNG TIN USER TỪ TRÌNH DUYỆT (LOCALSTORAGE)
+        const storedUser = localStorage.getItem('currentUser');
+
+        if (storedUser) {
+           
+        const userData = JSON.parse(storedUser);
+        const userId = userData.id;
+
+      // 2. Gọi API POST lên Backend
+        const response = await axios.post('http://localhost:8080/add-to-favorite', {
+          user_id: userId,
+          product_id: productId
+        });
+
+        if (response.data.errCode === 0) {
+          alert("Đã thêm vào danh sách yêu thích!");
+        }  else return;
+      } 
+      else {
+        // Lấy danh sách cũ ra (nếu chưa có thì tạo mảng rỗng)
+            let guestFavorites = JSON.parse(localStorage.getItem('guestFavorites')) || [];
+
+            // Kiểm tra xem ID sản phẩm đã có trong mảng chưa
+            if (guestFavorites.includes(productId)) {
+                alert(" Sản phẩm này đã có trong danh sách rồi!");
+            } else {
+                // Thêm ID mới vào mảng và lưu lại
+                guestFavorites.push(productId);
+                localStorage.setItem('guestFavorites', JSON.stringify(guestFavorites));
+                alert(" Đã lưu tạm vào mục Yêu thích (Hãy đăng nhập để lưu vĩnh viễn nhé)!");
+            }
+      }
+      } catch (error) {
+        console.error("Lỗi thêm yêu thích:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+  }
+};
+
+
+//  THÊM VÀO GIỎ HÀNG 
+const handleAddToCart = async (e,product) => { 
+
+  if (!product) {
+        alert("Vui lòng chọn một sản phẩm để thử trước khi thêm vào giỏ!");
+        return;
+    }
+
+    const storedUser = localStorage.getItem('currentUser');
+    if (!storedUser) {
+        alert("Vui lòng đăng nhập để mua hàng!");
+        return navigate('/login');
+    }
+    const userData = JSON.parse(storedUser);
+
+    try {
+        const response = await axios.post('http://localhost:8080/add-to-cart', {
+            user_id: userData.id,
+            product_id: product.id,      
+            quantity: 1,             
+            size: product.size || '16 ', 
+            price: product.price         
+        });
+
+        if (response.data.errCode === 0) {
+            addToCartSuccess(1);
+            alert("Đã thêm sản phẩm vào giỏ hàng!"); 
+        }
+    } catch (error) { 
+        console.error("Lỗi thêm vào giỏ hàng:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+    }
+};
   return (
     <>
       <section className="ar-section">
@@ -164,7 +273,7 @@ const AR = () => {
         <div className="ar-container">
 
           {/* --- KHUNG CAMERA--- */}
-          <div className="ar-camera-view">
+            <div className="ar-camera-view " >
             
             <div className={`camera-flash ${isFlashing ? 'active' : ''}`}></div>
 
@@ -216,14 +325,18 @@ const AR = () => {
                <button className="tool-btn camera-btn" onClick={takePhoto}>
                 <img src={iconCamera} alt="Chụp ảnh" />
                </button>
-               <button className="tool-btn ">
-                <img src={iconFullScreen} alt="Toàn màn hình" />
-               </button>
+              {/* Tìm nút có iconFullScreen và thêm onClick */}
+              <button className="tool-btn" onClick={toggleFullScreen}>
+                <img src={iconFullScreen} alt={isFullscreen ? "Thu nhỏ" : "Toàn màn hình"} />
+              </button>
+              {/*  sản phẩm yêu thích */}
                <button className="tool-btn">
-                <img src={iconWishlist} alt="Thêm vào sản phẩm yêu thích" />
+                <img src={iconWishlist} alt="Thêm vào sản phẩm yêu thích"  onClick={(e) => handleAddToFavorite(e, selectedProduct?.id)}/>
                </button>
-               <button className="tool-btn">
-                <img src={iconCart} alt="Thêm vào giỏ hàng" />
+
+               {/* giỏ hàng */}
+               <button className="tool-btn "  onClick={(e) => handleAddToCart(e,selectedProduct)}>
+                <img src={iconCart  } alt="Thêm vào giỏ hàng"   />
                </button>
             </div>
           </div>

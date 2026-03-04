@@ -95,6 +95,8 @@ export class ARProcessor {
       this.ring = null;
     }
 
+    /// Đập chất liệu 
+    
     const loader = new GLTFLoader();
     loader.load(glbPath, (gltf) => {
       this.ring = gltf.scene;
@@ -122,7 +124,6 @@ export class ARProcessor {
   // --- LOGIC XỬ LÝ (Loop) ---
   onResults(results) {
     // TỐI ƯU 2: GUARD CLAUSE
-    // Nếu hiện tại không có mô hình nhẫn (this.ring = null) -> Ẩn mọi thứ và KHÔNG TÍNH TOÁN NỮA
     if (!this.ring) {
         this.landmarkPoints.forEach(p => p.visible = false);
         // Vẫn phải render scene trống để khung hình camera không bị đứng

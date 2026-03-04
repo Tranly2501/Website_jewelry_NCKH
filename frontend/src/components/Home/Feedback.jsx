@@ -1,35 +1,35 @@
-// import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "../../pages/Home/Home.css";
 import '../../index.css';
 import arrowLeft from '../../assets/arrow-left.svg';
 import arrowRight from '../../assets/arrow-right.svg';
-import avatarImg from '../../assets/Home/avataar.jpg';
-import { useState } from "react";
-const feedbacks = [
-  {
-    id: 1,
-    avatar: avatarImg,
-    content:
-      "Sản phẩm rất tinh xảo, đóng gói sang trọng và giao hàng nhanh.",
-    name: "Le Linh Anh",
-  },
-  {
-    id: 2,
-    avatar: avatarImg,
-    content:
-      "Thiết kế trang nhã, đeo rất nhẹ tay, phù hợp làm quà tặng.",
-    name: "Ngọc Mai",
-  },
-  {
-    id: 3,
-    avatar: avatarImg,
-    content:
-      "Trải nghiệm mua sắm tốt, tư vấn nhiệt tình, sẽ ủng hộ tiếp.",
-    name: "Thu Hằng",
-  },
-];
+
+
+
 const Feedback = () => {
+    const [feedbacks, setFeedbacks] = useState([]);
     const [index, setIndex] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+
+
+    // --- GỌI API LẤY DỮ LIỆU THẬT ---
+    useEffect(() => {
+        const fetchFeedbacks = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.get('http://localhost:8080/get-all-feedbacks');
+                if (response.data.errCode === 0) {
+                    setFeedbacks(response.data.data);
+                }
+            } catch (err) {
+                console.error("Lỗi lấy feedback:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchFeedbacks();
+    }, []);
     
     const prev = () => {
         setIndex((prev) =>
@@ -43,6 +43,8 @@ const Feedback = () => {
         );
      };
     
+     if (isLoading) return <div className="loading">Đang tải đánh giá...</div>;
+    if (feedbacks.length === 0) return null; // Không hiện nếu không có data
 
     return( 
     <>
@@ -60,9 +62,14 @@ const Feedback = () => {
             <div className="slide" key={fb.id}>
               {/* GIỮ NGUYÊN CARD */}
               <div className="feedback-card">
-                <img src={fb.avatar} className="avatar" />
-                <p className="content">{fb.content}</p>
-                <span className="name">{fb.name}</span>
+               <img src={fb.avatar || `https://ui-avatars.com/api/?name=${fb.userData?.username}&background=random`} className="avatar" alt="User" />
+                {/* Hiện số sao đánh giá */}
+                    <div className="stars-row" style={{ color: '#d4af37' }}>
+                       {"★".repeat(fb.star)}
+                        {"☆".repeat(5 - fb.star)}
+                    </div>
+                <p className="content">{fb.context}</p>
+                <span className="name">{fb.userData?.username || "Khách hàng"}</span>
               </div>
             </div>
           ))}

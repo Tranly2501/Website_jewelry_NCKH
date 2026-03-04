@@ -433,6 +433,67 @@
   color: #fff;
 }
 
+.reviews-display-list {
+    margin-bottom: 4cap;
+}
+
+.review-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.review-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.star-active {
+    color: #d4af37; /* Màu vàng sang trọng */
+}
+
+.review-author {
+    font-weight: 350;
+    font-size: 14px;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.review-date {
+    font-size: 14px;
+    font-weight: 300;
+    color: #999;
+}
+
+.review-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.no-reviews {
+    font-style: italic;
+    color: #888;
+    padding: 20px 0;
+}
+
+.review-form span {
+    font-size: 14px;
+    font-style: italic;
+     color: #d4af37; 
+    font-weight: 300;
+}
+
 /* Responsive Mobile cho Form */
 @media (max-width: 768px) {
   .form-row {

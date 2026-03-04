@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
+
+
 import Header from '../src/components/Header/Header.jsx'
 import Footer from '../src/components/footer/Footer.jsx'
 import Policy from './components/Polycy/Policy.jsx';

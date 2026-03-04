@@ -1,95 +1,169 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {useCart} from '../../util/CartContenxt.jsx'
 import './Wishlist.css';
 import '../../index.css'
 import { transformProduct } from "../../util/transformProduct.js";
 
 
 const Wishlist = () => {
+    const navigate = useNavigate();
    
   // 1. TẠO STATE CHỨA DANH SÁCH SẢN PHẨM YÊU THÍCH
   const [wishlistItems, setWishlistItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+    const { addToCartSuccess } = useCart();
 
   //2. FETCH DATA TỪ BACKEND
 
-  useEffect(()=>{
-    const fetchWishlist = async () =>{
+// LẤY DANH SÁCH YÊU THÍCH KHI MỞ TRANG
+  useEffect(() => {
+    const fetchWishlist = async () => {
       try {
         setIsLoading(true);
-        // LẤY THÔNG TIN USER TỪ TRÌNH DUYỆT (LOCALSTORAGE)
         const storedUser = localStorage.getItem('currentUser');
 
-        // KIỂM TRA: Nếu chưa đăng nhập thì không cho gọi API
-        if (!storedUser) {
-           console.warn("User chưa đăng nhập, không thể lấy danh sách yêu thích!");
-           setWishlistItems([]); // Trả về mảng rỗng
-           setIsLoading(false);
-           return; // Dừng hàm lại tại đây
+        // ==========================================
+        // TRƯỜNG HỢP 1: ĐÃ ĐĂNG NHẬP (Lấy từ Database)
+        // ==========================================
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          const userId = userData.id;
+
+          const response = await axios.get(`http://localhost:8080/get-favorites/${userId}`);
+          //  Trỏ thẳng vào response.data.data
+            const rawData = response.data.data || response.data.favorites || [];
+  
+            // Chuyển đổi dữ liệu từ API sang định dạng mà UI cần
+            const formattedData = rawData.map(item => {
+              // Lấy cục dữ liệu sản phẩm (Đề phòng Backend trả về hoa/thường)
+              const productData = item.Product || item.product || item.products || item; 
+              const prod = transformProduct(productData);
+  
+              // Lấy số lượng và ép kiểu về số nguyên
+              const currentQuantity = parseInt(prod.quantity || 0, 10);
+  
+              return {
+                ...prod,
+                // Cập nhật trạng thái 
+                status: currentQuantity > 0 ? "Còn hàng" : "Hết hàng" 
+              };
+          });
+          setWishlistItems(formattedData);
+        } 
+        
+        // ==========================================
+        // TRƯỜNG HỢP 2: CHƯA ĐĂNG NHẬP (Lấy từ LocalStorage)
+        // ==========================================
+        else {
+          // 1. Lấy mảng ID từ localStorage (ví dụ: [1, 5, 12])
+          const guestFavorites = JSON.parse(localStorage.getItem('guestFavorites')) || [];
+
+          // Nếu mảng rỗng thì dừng luôn, không cần gọi API
+          if (guestFavorites.length === 0) {
+            setWishlistItems([]);
+            setIsLoading(false);
+            return;
+          }
+
+          // 2. Dùng Promise.all để gọi API lấy chi tiết cho TỪNG sản phẩm cùng một lúc
+          // (Tận dụng API lấy chi tiết sản phẩm bạn đã viết ở ProductDetail)
+          const productPromises = guestFavorites.map(productId => 
+             axios.get(`http://localhost:8080/get-product/${productId}`)
+          );
+
+          // Đợi tất cả API chạy xong
+          const responses = await Promise.all(productPromises);
+
+          // 3. Format dữ liệu và đưa vào State
+          const formattedData = responses.map(res => {
+             const actualData = res.data.product || res.data.data || res.data;
+             return transformProduct(actualData);
+          });
+
+          setWishlistItems(formattedData);
         }
 
-        //GIẢI MÃ DỮ LIỆU VÀ LẤY ID
-        const userData = JSON.parse(storedUser);
-        const currentUserId = userData.id; 
-        console.log("Đang lấy Wishlist cho User ID:", currentUserId);
-
-
-        const response = await axios.get(`http://localhost:8080/get-favorites/${currentUserId}`);
-          
-        //  Trỏ thẳng vào response.data.data
-        const rawData = response.data.data || response.data.favorites || [];
-
-        // Chuyển đổi dữ liệu từ API sang định dạng mà UI cần
-        const formattedData = rawData.map(item => {
-          // Lấy cục dữ liệu sản phẩm (Đề phòng Backend trả về hoa/thường)
-          const productData = item.Product || item.product || item.products || item; 
-          const prod = transformProduct(productData);
-
-          // Lấy số lượng và ép kiểu về số nguyên
-          const currentQuantity = parseInt(prod.quantity || 0, 10);
-
-          return {
-            ...prod,
-            // Cập nhật trạng thái 
-            status: currentQuantity > 0 ? "Còn hàng" : "Hết hàng" 
-          };
-        });
-        
-        setWishlistItems(formattedData);
       } catch (error) {
         console.error("Lỗi khi lấy danh sách yêu thích:", error);
       } finally {
         setIsLoading(false);
       }
     };
+    
     fetchWishlist();
-  },[]);
+  }, []);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
   };
 
-  const handleAddToCart = (id) => {
-    alert(`Đã thêm sản phẩm ID: ${id} vào giỏ hàng!`);
-    // Logic thêm vào giỏ hàng thực tế sẽ viết ở đây
-  };
-  // xoas sản phẩm khỏi wishlist (chỉ là demo, chưa gọi API) 
- const handleRemoveFromWishlist = async (productId) => {
+const handleAddToCart = async (item) => { // Đổi tên tham số cho rõ ràng
+    const storedUser = localStorage.getItem('currentUser');
+    if (!storedUser) {
+        alert("Vui lòng đăng nhập để mua hàng!");
+        return navigate('/login');
+    }
+    const userData = JSON.parse(storedUser);
 
     try {
-      // 1. Lấy ID của User đang đăng nhập
+        const response = await axios.post('http://localhost:8080/add-to-cart', {
+            user_id: userData.id,
+            product_id: item.id,      
+            quantity: 1,             
+            size: item.size || '16 ', 
+            price: item.price         
+        });
+
+        if (response.data.errCode === 0) {
+            addToCartSuccess(1);
+            alert("Đã thêm sản phẩm vào giỏ hàng!"); 
+        }
+    } catch (error) { 
+        console.error("Lỗi thêm vào giỏ hàng:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+    }
+};
+const handleRemoveFromWishlist = async (productId) => {
+    const isConfirm = window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi mục yêu thích?");
+    if (!isConfirm) return;
+
+    try {
       const storedUser = localStorage.getItem('currentUser');
-      if (!storedUser) return;
+
+      // ==========================================
+      // TRƯỜNG HỢP 1: ĐÃ ĐĂNG NHẬP (Xóa dưới Database)
+      // ==========================================
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        const userId = userData.id;
+
+        const response = await axios.delete(`http://localhost:8080/remove-favorite/${userId}/${productId}`);
+
+        if (response.data.errCode === 0) {
+          setWishlistItems(prevItems => prevItems.filter(item => item.id !== productId));
+         
+        }
+      } 
       
-      const userData = JSON.parse(storedUser);
-      const userId = userData.id;
-
-      // 2. Gọi API Xóa
-      const response = await axios.delete(`http://localhost:8080/remove-favorite/${userId}/${productId}`);
-
-      if (response.data.errCode === 0) {
-        // 3. Cập nhật lại State: Lọc bỏ cái sản phẩm vừa bị xóa ra khỏi mảng
+      // ==========================================
+      // TRƯỜNG HỢP 2: CHƯA ĐĂNG NHẬP (Xóa trong LocalStorage)
+      // ==========================================
+      else {
+        // 1. Lấy mảng ID cũ ra
+        let guestFavorites = JSON.parse(localStorage.getItem('guestFavorites')) || [];
+        
+        // 2. Lọc bỏ cái ID vừa bị xóa đi
+        guestFavorites = guestFavorites.filter(id => id !== productId);
+        
+        // 3. Lưu mảng mới ngược lại vào localStorage
+        localStorage.setItem('guestFavorites', JSON.stringify(guestFavorites));
+        
+        // 4. Cập nhật giao diện (ẩn thẻ sản phẩm đó đi)
         setWishlistItems(prevItems => prevItems.filter(item => item.id !== productId));
+        
+    
       }
 
     } catch (error) {
@@ -143,13 +217,16 @@ const Wishlist = () => {
 
               {/* Cột 4: Nút bấm */}
               <div className="w-col w-action">
-                <button 
-                  className="btn-add-cart-wishlist"
-                  onClick={() => handleAddToCart(item.id)}
-                  disabled={item.status === 'Hết hàng'} // Khóa nút nếu hết hàng
-                  style={{ opacity: item.status === 'Hết hàng' ? 0.5 : 1, cursor: item.status === 'Hết hàng' ? 'not-allowed' : 'pointer' }}
+                                <button 
+                    className="btn-add-cart-wishlist"
+                    onClick={() => handleAddToCart(item)} 
+                    disabled={item.status === 'Hết hàng'}
+                    style={{ 
+                        opacity: item.status === 'Hết hàng' ? 0.5 : 1, 
+                        cursor: item.status === 'Hết hàng' ? 'not-allowed' : 'pointer' 
+                    }}
                 >
-                  Thêm vào giỏ hàng
+                    Thêm vào giỏ hàng
                 </button>
                 <button 
                   className="btn-remove-wishlist" 

@@ -254,11 +254,11 @@ position: relative;
 }
 .feedback-card {
     width: 699px;
-    height: 317px;
+    height: 320px;
     background: #FFF6E8;
     border-radius: 18px;
     text-align: center;
-    padding: 40px 60px;
+    padding: 20px 60px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
     border: 1px solid #000000;
      
@@ -269,13 +269,14 @@ position: relative;
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 1px solid #000000;
 }
 .feedback-card .content {
     font: 1.2rem;
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin-top: 5px;
+    margin-bottom: 15px;
     font-weight: 300;
 }
 .feedback-card .name {

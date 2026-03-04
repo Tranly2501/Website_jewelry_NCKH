@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import {useCart} from '../../util/CartContenxt.jsx';
+
 import '../../index.css'
 import '../Header/Header.css'
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +10,7 @@ import User from '../../assets/account.svg'
 import Wishlist from '../../assets/heart.svg'
 import Cart from '../../assets/cart.svg'
 import Search from '../Search/Search.jsx';
-import React, { useState, useEffect } from 'react'
+
 
 function Header() {
     const [menu, setMenu] = useState("home");
@@ -16,6 +19,8 @@ function Header() {
     const [currentUser, setCurrentUser] = useState(null);
     const [showUserMenu, setShowUserMenu] = useState(false); // State bật tắt menu con
 
+    const { cartCount, isBumping } = useCart();
+ 
     const navigate = useNavigate();
 
     // 1. Kiểm tra đăng nhập
@@ -133,13 +138,19 @@ function Header() {
                         <img className={menu === "Wishlist" ? "active-menu" : null}
                             onClick={() => setMenu("Wishlist")} src={Wishlist} alt="Wishlist" />
                     </Link>
-                    <div className="cart-icon"  >
+                    <div className="cart-icon-container"  >
                         <Link to="/Cart">
-                            <img className={menu === "Cart" ? "active-menu" : null}
+                            <img
+                                
                                 onClick={() => setMenu("Cart")} src={Cart} alt="Shopping_cart" />
+
+                            {cartCount  > 0 && (
+                                <span className={`cart-badge ${isBumping ? "bump" : ""}`}>{cartCount}</span>
+                            )}
                         </Link>
-                        <p className='sl'></p>
+
                     </div>
+
                 </div>
 
             </header>

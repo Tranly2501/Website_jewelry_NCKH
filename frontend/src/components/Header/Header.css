@@ -53,19 +53,45 @@ nav ul li {
   position: relative;
   
 }
-/* .cart-icon .sl {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  top: 9px;
-  right: -2px;
-  background-color: rgb(255, 83, 83);
-  color: white;
-  border-radius: 50%;
-  padding: 2px px;
-  text-align: center;
-  font-size: 10px;
-}*/
+/* --- Giao diện Giỏ hàng & Badge --- */
+.cart-icon-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-icon-container img {
+    transition: transform 0.2s; /* Làm mượt icon khi hover */
+}
+
+/* Chấm đỏ chứa số lượng */
+.cart-badge {
+    position: absolute;
+    top: 2px;
+    right: -7px;       
+    background-color: #ff4d4f; 
+    color: white;
+    border-radius: 50%; 
+    padding: 2px 6px;   
+    font-size: 11px;    
+    font-weight: bold;
+    line-height: 1;
+    min-width: 18px;   
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+}
+
+/* --- Hiệu ứng nảy (Bump) khi thêm vào giỏ --- */
+.bump {
+    animation: bumpEffect 0.3s ease-out;
+}
+
+@keyframes bumpEffect {
+    0%   { transform: scale(1); }
+    10%  { transform: scale(0.9); }
+    30%  { transform: scale(1.2); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
 
 .search-icon{
   cursor: pointer;

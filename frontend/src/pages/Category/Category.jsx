@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-
 import axios from "axios";
+
 import LayoutGrid from "../../components/product/layoutGrid/LayoutGrid";
-import Pagination from "../../components/Pagination.jsx"; 
+import Pagination from "../../components/Pagination.jsx";
+import FilterSidebar from "../../components/filterSidebar/FilterSidebar.jsx"; // Đảm bảo đường dẫn đúng
 
 import filterIcon from "../../assets/filter.svg";
 import sortIcon from "../../assets/arrow_down.svg";
@@ -31,29 +32,69 @@ const Category = () => {
   /* ================= STATE ================= */
   const [allProducts, setAllProducts] = useState([]);
   const [activeCollection, setActiveCollection] = useState("all");
+  
   const [sortValue, setSortValue] = useState("Sắp xếp");
   const [openSort, setOpenSort] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
+
+  // STATE ĐÓNG/MỞ SIDEBAR LỌC
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const sortRef = useRef(null);
 
-  /* ================= render api product ================= */
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/get-all-products");
-        const rawData = response.data.products || response.data || [];
+  /* ================= FETCH API (Tích hợp Lọc) ================= */
+  // Hàm này sẽ gọi API lấy tất cả, HOẶC gọi API lọc nếu có filterData
+  const fetchProducts = async (filterData = null) => {
+    try {
+      let url = "http://localhost:8080/get-all-products";
+      let params = {};
 
-        // Chuyển đổi dữ liệu từ API sang định dạng mà UI cần
-        const formattedData = rawData.map (item => transformProduct(item));
-        setAllProducts(formattedData)
-      } catch (err) {
-        console.error("Lỗi tải danh mục:", err);
+      // Nếu có dữ liệu từ Popup lọc gửi sang
+      if (filterData) {
+        url = "http://localhost:8080/products/filter";
+        
+        // Chuyển mảng thành chuỗi để gửi API (VD: ["Bạc", "Vàng"] -> "Bạc,Vàng")
+        if (filterData.materials && filterData.materials.length > 0) {
+          params.chatLieu = filterData.materials.join(",");
+        }
+        if (filterData.genders && filterData.genders.length > 0) {
+          params.gioiTinh = filterData.genders.join(",");
+        }
+        if (filterData.sizes && filterData.sizes.length > 0) {
+          params.sizes = filterData.sizes.join(",");
+        }
+        
+        // Luôn gửi khoảng giá
+        params.minPrice = filterData.minPrice || 0;
+        params.maxPrice = filterData.maxPrice || 25000000;
       }
-    };
+
+      const response = await axios.get(url, { params });
+      
+      // Xử lý dữ liệu trả về (tùy thuộc API trả về .data hay .products)
+        const rawData = response.data.data || response.data.products || response.data || [];
+        // THÊM DÒNG NÀY ĐỂ DEBUG:
+      console.log("Số lượng SP API trả về:", rawData.length);
+      const formattedData = rawData.map((item) => transformProduct(item));
+      
+      setAllProducts(formattedData);
+    } catch (err) {
+      console.error("Lỗi tải danh mục hoặc lọc sản phẩm:", err);
+    }
+  };
+
+  // Lần đầu tiên vào trang -> Gọi API lấy tất cả sản phẩm
+  useEffect(() => {
     fetchProducts();
-  },[])
+  }, []);
+
+  /* ================= XỬ LÝ KHI BẤM "ÁP DỤNG" Ở SIDEBAR ================= */
+  const handleApplyFilters = (filterData) => {
+    // Gọi lại API với thông số lọc
+    fetchProducts(filterData);
+    // Trở về trang 1
+    setCurrentPage(1);
+  };
 
   /* ================= CLICK OUTSIDE SORT ================= */
   useEffect(() => {
@@ -63,17 +104,14 @@ const Category = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /* ================= FILTER BY COLLECTION ================= */
+  /* ================= LỌC THEO BỘ SƯU TẬP (Frontend) ================= */
   const filteredProducts = useMemo(() => {
     if (activeCollection === "all") return allProducts;
-    return allProducts.filter(
-      (p) => p.categoryId === activeCollection
-    );
-  }, [activeCollection,allProducts]);
+    return allProducts.filter((p) => p.categoryId === activeCollection);
+  }, [activeCollection, allProducts]);
 
   /* ================= SORT ================= */
   const sortedProducts = useMemo(() => {
@@ -90,9 +128,7 @@ const Category = () => {
       case "Từ Z → A":
         return list.sort((a, b) => b.name.localeCompare(a.name));
       case "Nổi bật":
-        return list.sort(
-          (a, b) => (b.isFeatured === true) - (a.isFeatured === true)
-        );
+        return list.sort((a, b) => (b.isFeatured === true) - (a.isFeatured === true));
       default:
         return list;
     }
@@ -107,7 +143,7 @@ const Category = () => {
     currentPage * PAGE_SIZE
   );
 
-  const start = (currentPage - 1) * PAGE_SIZE + 1;
+  const start = totalProducts === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
   const end = Math.min(currentPage * PAGE_SIZE, totalProducts);
 
   /* ================= HANDLERS ================= */
@@ -124,7 +160,14 @@ const Category = () => {
 
   /* ================= RENDER ================= */
   return (
-      <>
+    <>
+      {/* 1. GỌI COMPONENT SIDEBAR */}
+      <FilterSidebar 
+        isOpen={isFilterOpen} 
+        onClose={() => setIsFilterOpen(false)} 
+        onApply={handleApplyFilters}
+      />
+
       {/* COLLECTION */}
       <div className="collection-section">
         <h2 className="collection-title">BỘ SƯU TẬP</h2>
@@ -146,7 +189,7 @@ const Category = () => {
         </div>
       </div>
 
-      {/* FILTER */}
+      {/* FILTER HEADER */}
       <div className="collection-filter">
         <div className="filter-left">
           <span>
@@ -155,6 +198,7 @@ const Category = () => {
         </div>
 
         <div className="filter-right">
+          {/* SORT */}
           <div className="sort" ref={sortRef}>
             <span
               className="sort-label"
@@ -185,15 +229,22 @@ const Category = () => {
             )}
           </div>
 
-          <div className="filter">
-            <img src={filterIcon} alt="" />
+          {/* BẤM VÀO ĐÂY ĐỂ MỞ SIDEBAR LỌC */}
+          <div className="filter" onClick={() => setIsFilterOpen(true)} style={{ cursor: "pointer" }}>
+            <img src={filterIcon} alt="Lọc" />
             Lựa chọn
           </div>
         </div>
       </div>
 
       {/* GRID */}
-      <LayoutGrid products={paginatedProducts} columns={4} />
+      {paginatedProducts.length > 0 ? (
+         <LayoutGrid products={paginatedProducts} columns={4} />
+      ) : (
+         <div style={{ textAlign: "center", padding: "50px", color: "#888" }}>
+           Không tìm thấy sản phẩm nào phù hợp với bộ lọc.
+         </div>
+      )}
 
       {/* PAGINATION */}
       {totalPages > 1 && (
