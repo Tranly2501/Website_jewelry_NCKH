@@ -2,61 +2,50 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('orders', {
+    await queryInterface.createTable('cartdetails', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      cart_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
-          key: 'id',
-        },
-      },
-      ship_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'shippinginformations',
+          model: 'carts',
           key: 'id'
         }
       },
-      status: {
-        type: Sequelize.STRING
+      product_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'products',
+          key: 'id'
+        }
+        
       },
-      note: {
-        type: Sequelize.TEXT
+      quantity: {
+        type: Sequelize.INTEGER
       },
-      basePrice: {
+      size: {
+        type: Sequelize.INTEGER
+      },
+      price: {
         type: Sequelize.DECIMAL(18,3)
       },
-      discount_id: {
-        type: Sequelize.INTEGER,
+      createdAt: {
         allowNull: false,
-        references: {
-          model: 'discounts',
-          key: 'id'
-        }
-      },
-      discount_amount: {
-        type: Sequelize.DECIMAL(10,3)
-      },
-      totalPrice: {
-        type: Sequelize.DECIMAL(18,0)
-      },
-      create_at: {
         type: Sequelize.DATE
       },
-      update_at: {
+      updatedAt: {
+        allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('orders');
+    await queryInterface.dropTable('cartdetails');
   }
 };

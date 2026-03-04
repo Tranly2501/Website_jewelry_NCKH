@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const register = async (req, res) => {
     try {
         // 1. THÊM phone VÀO ĐÂY ĐỂ NHẬN DỮ LIỆU
-        const { email, password, username, phone } = req.body;
+        const { email, password, username, phone,firstName,lastName } = req.body;
         
         const userExists = await db.users.findOne({ where: { email } });
         if (userExists) return res.status(400).send('Email đã tồn tại');
@@ -17,6 +17,8 @@ const register = async (req, res) => {
 
         // Tạo user mới
         await db.users.create({
+            firstName,
+            lastName,
             email,
             username,
             password: hashedPassword, 
@@ -43,7 +45,7 @@ const login = async (req, res) => {
         const validPass = await bcrypt.compare(password, user.password);
         if (!validPass) return res.status(400).send('Sai mật khẩu');
 
-        // 3. Tạo token (SỬA LỖI: Phải dùng biến 'user' - kết quả tìm được)
+        // 3. Tạo token 
         const token = jwt.sign(
             { id: user.id, role: user.role }, 
             'jewelry', 
@@ -57,11 +59,13 @@ const login = async (req, res) => {
                 username: user.username, 
                 email: user.email,       
                 phone: user.phone,       
-                role: user.role          
+                role: user.role,
+                firstName: user.firstName,
+                lastName: user.lastName          
             }
         });
     } catch (error) {
-        console.log(error); // Nên log lỗi ra để dễ debug
+        console.log(error); 
         res.status(500).send('Lỗi server');
     }
 };

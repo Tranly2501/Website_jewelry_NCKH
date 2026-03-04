@@ -1,48 +1,42 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
-      users.hasMany(models.order,{
-        foreignKey: 'user_id'
-      });
-      users.hasMany(models.favorites,{
-        foreignKey: 'user_id'
-      });
-      users.hasMany(models.feedback,{
-        foreignKey: 'user_id'
-      })
+      users.hasMany(models.order, { foreignKey: 'user_id' });
+      users.hasMany(models.favorites, { foreignKey: 'user_id' });
+      users.hasMany(models.feedback, { foreignKey: 'user_id' });
+      users.hasOne(models.carts, { foreignKey: 'user_id' }); 
     }
   }
+  
   users.init({
+    firstName: {
+      type: DataTypes.STRING(100),
+      field: 'firstName' 
+    },
+    lastName: {
+      type: DataTypes.STRING(100),
+      field: 'lastName' 
+    },
     username: DataTypes.STRING(150),
     email: DataTypes.STRING,
     password: DataTypes.STRING(150),
     avatar: DataTypes.TEXT,
     phone: DataTypes.STRING(20),
-    create_at: DataTypes.DATE,
-    update_at: DataTypes.DATE,
-    role: {
-      type: DataTypes.STRING(20),
-      defaultValue: 'user', 
-      allowNull: false
-    },
+    role: DataTypes.STRING(20)
   }, 
   {
     sequelize,
     modelName: 'users',
     tableName: 'users',
     underscored: true,
+    // --- PHẦN OPTIONS CHỈ DÀNH CHO TIMESTAMPS ---
+    timestamps: true, 
     createdAt: 'create_at',
     updatedAt: 'update_at'
   });
+  
   return users;
 };

@@ -30,7 +30,7 @@ module.exports = {
           image_url: JSON.stringify(p.image_url),
           byturn: p.byturn,
           quantity: p.quantity,
-          status: p.status,
+          status: JSON.stringify(p.status),
           create_at: new Date(),
           update_at: new Date()
       }});

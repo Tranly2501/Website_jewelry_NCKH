@@ -1,6 +1,7 @@
 'use strict';
 const {
-  Model
+  Model,
+  or
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class order extends Model {
@@ -16,13 +17,18 @@ module.exports = (sequelize, DataTypes) => {
       });
       order.hasMany(models.orderdetails,{
         foreignKey: 'order_id'
-      })
+      });
+      order.belongsTo(models.discounts, { foreignKey: 'discount_id' });
+      order.belongsTo(models.shippinginformation, { foreignKey: 'ship_id'})
     }
   }
   order.init({
     user_id: DataTypes.INTEGER,
     status: DataTypes.STRING,
     note: DataTypes.TEXT,
+    basePrice: DataTypes.DECIMAL(18,0),
+    discount_id: DataTypes.INTEGER,
+    discount_amount: DataTypes.DECIMAL(10,3),
     totalPrice: DataTypes.DECIMAL(18,0),
     create_at: DataTypes.DATE,
     update_at: DataTypes.DATE

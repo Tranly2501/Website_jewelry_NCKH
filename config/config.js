@@ -1,12 +1,23 @@
 const {Sequelize}= require('sequelize');
+const fs = require('fs');   
+const path = require('path');
 require('dotenv').config();
 
 module.exports ={
    development: {
-    username: process.env.DB_USER,
+username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: 'mysql'
+    port: process.env.DB_PORT,
+    dialect: 'mysql',
+    dialectOptions: {
+      ssl: {
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: true,
+        ca: fs.readFileSync(path.resolve(process.cwd(), 'cert', 'isrgrootx1.pem')).toString() 
+      
    } 
 }
+}
+};

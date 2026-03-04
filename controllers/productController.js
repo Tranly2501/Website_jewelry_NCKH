@@ -24,7 +24,8 @@ const getAllProducts = async(req,res) =>{
     }
     catch (err) {
         console.log(err);
-        return res.status(500).json({errCode:-1, message: 'Lỗi Server'});
+        return res.status(500).json({errCode:-1, message: err.message});
+
     }
 }
 
@@ -111,4 +112,82 @@ const getRelatedProducts = async (req, res) => {
     }
 };
 
-module.exports = {getAllProducts, getProductById,searchProduct, getRelatedProducts};
+const getFilteredProducts = async (req, res) => {
+    try {
+        const { minPrice, maxPrice, chatLieu, gioiTinh } = req.query;
+        const andConditions = [];
+
+        // 1. LỌC GIÁ
+        if (minPrice && maxPrice) {
+            andConditions.push({
+                price: { [Op.between]: [Number(minPrice), Number(maxPrice)] }
+            });
+        }
+
+        // 2. LỌC CHẤT LIỆU (Xử lý thông minh theo hướng trang sức)
+        if (chatLieu) {
+            const materialArray = chatLieu.split(','); // VD: ['Bạc', 'Ngọc']
+            
+            const materialOrConditions = materialArray.map(m => {
+                // Nếu khách chọn "Ngọc", hệ thống tự động quét cả cột "Chất liệu" VÀ cột "Đá chính"
+                if (m === 'Ngọc') {
+                    return {
+                        [Op.or]: [
+                            db.sequelize.where(db.sequelize.literal(`specification->>'$."Chất liệu"'`), 'LIKE', `%${m}%`),
+                            db.sequelize.where(db.sequelize.literal(`specification->>'$."Đá chính"'`), 'LIKE', `%${m}%`),
+                            db.sequelize.where(db.sequelize.literal(`specification->>'$."Đá phụ"'`), 'LIKE', `%${m}%`)
+                        ]
+                    };
+                }
+                
+                // Nếu khách chọn "Vàng", "Bạc", "Bạch kim" thì chỉ quét trong cột "Chất liệu"
+                return db.sequelize.where(
+                    db.sequelize.literal(`specification->>'$."Chất liệu"'`),
+                    'LIKE',
+                    `%${m}%`
+                );
+            });
+            
+            andConditions.push({ [Op.or]: materialOrConditions });
+        }
+
+        // 3. LỌC GIỚI TÍNH (Giữ nguyên sự linh hoạt như bạn mong muốn)
+        if (gioiTinh) {
+            const genderArray = gioiTinh.split(','); // VD: ['Nữ']
+            
+            const genderOrConditions = genderArray.map(g => 
+                // Dùng LIKE để "Nữ" vẫn có thể match được "Nữ (unisex tùy phong cách)"
+                db.sequelize.where(
+                    db.sequelize.literal(`specification->>'$."Giới tính"'`),
+                    'LIKE',
+                    `%${g}%`
+                )
+            );
+
+            andConditions.push({ [Op.or]: genderOrConditions });
+        }
+
+        // 4. LẮP RÁP VÀ TRUY VẤN
+        const finalWhere = andConditions.length > 0 ? { [Op.and]: andConditions } : {};
+
+        const products = await db.products.findAll({
+            where: finalWhere,
+            order: [['create_at', 'DESC']]
+        });
+
+        return res.status(200).json({
+            errCode: 0,
+            message: "Lọc sản phẩm thành công!",
+            total: products.length,
+            data: products
+        });
+
+    } catch (error) {
+        console.error("Lỗi API Lọc Sản Phẩm:", error);
+        return res.status(500).json({ errCode: -1, message: "Lỗi Server!" });
+    }
+};
+
+
+
+module.exports = {getAllProducts, getProductById,searchProduct, getRelatedProducts,getFilteredProducts};

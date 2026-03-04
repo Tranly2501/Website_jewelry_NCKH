@@ -8,44 +8,51 @@ npx sequelize-cli model:generate --name order --attributes user_id:integer,statu
 lệnh kiểm tra khóa ngoại và ràng buộc: 
 SELECT * FROM information_scheme.table_constrains
 WHERE table_scheme = "database_name" AND table_name='';
-rollback trở lại có thể dùng nppx sequelize-cli db:migrate:undo; và trở về ban đầu dùng npx sequelize-cli db:migrate:undo:all
+rollback trở lại có thể dùng npx sequelize-cli db:migrate:undo; và trở về ban đầu dùng npx sequelize-cli db:migrate:undo:all
 */
-console.log('This is my shopapp');
+// ... (các comment CLI của bạn giữ nguyên)
+require('dotenv').config(); 
 
 const express = require("express");
 const cors = require("cors");
 const path = require('path');
+
 // Import routes và config
 const authRoutes = require('./routes/auth'); 
 const webRoutes = require('./routes/web');
+
+console.log("👉 ĐỊA CHỈ DATABASE ĐANG DÙNG LÀ:", process.env.DB_HOST);
+console.log("👉 PASSWORD ĐANG ĐỌC ĐƯỢC LÀ:", process.env.DB_PASSWORD ? "Đã thấy mật khẩu" : "Vẫn đang trống (undefined)");
+console.log('This is my shopapp');
+
+
+
 
 const app = express();
 
 // ==========================================
 // 1. GỌI CORS LÊN TRƯỚC TIÊN 
 // ==========================================
-app.use(cors(
-    {
-        origin: [
+app.use(cors({
+    origin: [
         "http://localhost:3000", // Web khách hàng
         "http://localhost:5013"  // Web Admin 
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true // Cho phép gửi cookie/token nếu cần
-    }
-));
+    credentials: true
+}));
 
 // ==========================================
-// 2.  MỞ CỬA THƯ MỤC PUBLIC
+// 2. MỞ CỬA THƯ MỤC PUBLIC
 // ==========================================
 app.use('/models', express.static(path.join(__dirname, 'public/models'), {
-    // Ép thêm Header CORS cho mọi file tĩnh (ảnh, 3D) được gửi đi từ thư mục này
     setHeaders: function (res, path, stat) {
-        res.set('Access-Control-Allow-Origin', '*'); // Cho phép tất cả các web lấy file
+        res.set('Access-Control-Allow-Origin', '*'); 
         res.set('Access-Control-Allow-Methods', 'GET');
         res.set('Access-Control-Allow-Headers', 'Content-Type');
     }
 }));
+
 // ==========================================
 // 3. CÁC CẤU HÌNH KHÁC VÀ ROUTES
 // ==========================================
