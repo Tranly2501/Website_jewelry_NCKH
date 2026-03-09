@@ -1,13 +1,7 @@
 {
-  "development": {
-    "username": "root",
-    "password": "Letranthaoly25012005",
-    "database": "test",
-    "host": "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
-    "dialect": "mysql"
-  },
 
-  "production": {
+
+  "development": {
     "username": "kmguAej6qko89jb.root",
     "password": "7OmXgWj1V1iKdaGj",
     "database": "test",
@@ -21,5 +15,5 @@
       }
     }
   }
-  
+
 }
