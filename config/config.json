@@ -14,10 +14,17 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "kmguAej6qko89jb.roott",
+    "password": "7OmXgWj1V1iKdaGj",
+    "database": "test",
+    "host":"gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
+    "port":4000,
+    "dialect": "mysql",
+    "dialectOptions": {
+      "ssl": {
+        "minVersion": "TLSv1.2",
+        "rejectUnauthorized": true
+      }
+    }
   }
 }

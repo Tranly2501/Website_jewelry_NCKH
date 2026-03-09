@@ -64,7 +64,7 @@ app.use('/api/user', authRoutes);
 console.log("Đang đăng ký route test...");
 app.use('', webRoutes);
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`✅ Server đang chạy tại: http://localhost:${PORT}`);
 });

@@ -49,6 +49,9 @@ module.exports = {
         type: Sequelize.JSON
         
       },
+      model_url: {
+        type: Sequelize.STRING
+      },
       create_at: {
         type: Sequelize.DATE
       },
@@ -58,6 +61,12 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+   await queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
+    
+    // 2. Thực hiện xóa bảng products
     await queryInterface.dropTable('products');
+    
+    // 3. Bật lại cơ chế kiểm tra ngay lập tức để bảo vệ các bảng khác
+    await queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
   }
 };

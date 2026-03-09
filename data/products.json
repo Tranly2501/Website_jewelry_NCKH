@@ -27,7 +27,8 @@
       "isFeatured": false,
       "isSale": true,
       "isAR": true
-    },
+    }
+    ,
       "create_at": null,
       "update_at": null
   },
@@ -51,7 +52,7 @@
       },
       "byturn": null,
       "quantity": 200,
-      "status": null,
+       "status": {"isAR" : true, "isSale":true},
 
       "create_at": null,
       "update_at": null
@@ -79,7 +80,7 @@
       },
       "byturn": null,
       "quantity": 30,
-      "status": null,
+       "status": {"isAR" : true, "isSale":true},
       "create_at": null,
       "update_at": null
   },
@@ -106,7 +107,7 @@
       },
       "byturn": null,
       "quantity": 25,
-      "status": null,
+      "status": {"isAR" : true, "isFeatured":true},
       "create_at": null,
       "update_at": null
   },
@@ -133,7 +134,7 @@
     },
       "byturn": null,
       "quantity": 50,
-      "status": null,
+      "status": {"isAR" : true, "isFeatured":true},
       "create_at": null,
       "update_at": null
   },
@@ -160,7 +161,7 @@
     },
       "byturn": null,
       "quantity": 75,
-      "status": null,
+      "status": {"isAR" : true, "isNew":true},
       "create_at": null,
       "update_at": null
   },
@@ -187,7 +188,7 @@
     },
       "byturn": null,
       "quantity": 65,
-      "status": null,
+       "status": {"isAR" : true, "isSale":true},
       "create_at": null,
       "update_at": null
   },
@@ -214,7 +215,7 @@
     },
       "byturn": null,
       "quantity": 90,
-      "status": null,
+       "status": {"isAR" : true, "isNew":true},
       "create_at": null,
       "update_at": null
   },
@@ -241,7 +242,7 @@
     },
       "byturn": null,
       "quantity": 250,
-      "status": null,
+       "status": {"isAR" : true, "isSale":true},
       "create_at": null,
       "update_at": null
   },
@@ -269,7 +270,7 @@
     },
       "byturn": null,
       "quantity": 300,
-      "status": null,
+      "status": {"isAR" : true, "isSale":true},
       "create_at": null,
       "update_at": null
   },
@@ -296,7 +297,7 @@
     },
       "byturn": null,
       "quantity": 40,
-      "status": null,
+      "status": {"isAR" : true, "isFeatured":true},
       "create_at": null,
       "update_at": null
   }
