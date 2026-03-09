@@ -6,13 +6,7 @@
     "host": "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
     "dialect": "mysql"
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
+
   "production": {
     "username": "kmguAej6qko89jb.roott",
     "password": "7OmXgWj1V1iKdaGj",
