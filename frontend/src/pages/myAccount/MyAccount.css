@@ -130,12 +130,207 @@
   margin: 0;
 }
 
+
+/* Thống kê */
+
+
+
 /* Responsive Tablet/Mobile */
 @media (max-width: 768px) {
   .account-layout {
     flex-direction: column;
   }
-  
+  /* Tổng quan container */
+.account-dashboard {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* 1. Stat Cards */
+.stat-cards-container {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  /* display: flex; */
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #eaeaea; /* Viền mỏng thanh lịch */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.1); /* Bóng mờ màu vàng khi hover */
+  border-color: #d4af37;
+}
+
+.stat-icon {
+  font-size: 30px;
+  margin-right: 15px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcf9f2; /* Màu nền be rất nhạt */
+  border-radius: 50%;
+}
+
+.stat-info h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #d4af37; /* Màu vàng giống chữ "Thống kê" đang active */
+  margin: 0 0 5px 0;
+}
+
+.stat-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 2. Membership Card */
+.membership-card {
+  background-color: #f8f1e9; /* Màu be giống dải header của bạn */
+  padding: 20px 25px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
+.membership-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.membership-info h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.membership-info span {
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.membership-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #eaddcc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #d4af37;
+  border-radius: 10px;
+}
+
+/* 3. Recent Orders */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.section-header h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+}
+
+.view-all-link {
+  color: #d4af37;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+.recent-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-orders-table th {
+  text-align: left;
+  padding: 12px 10px;
+  color: #888;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.recent-orders-table td {
+  padding: 15px 10px;
+  border-bottom: 1px solid #f5f5f5;
+  color: #444;
+  font-size: 14px;
+}
+
+.order-id {
+  font-weight: 600;
+  color: #333 !important;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.processing {
+  background-color: #fff8e6;
+  color: #e6a23c;
+}
+
+.status-badge.success {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
   .account-sidebar {
     border-right: none;
     border-bottom: 1px solid #e0e0e0;

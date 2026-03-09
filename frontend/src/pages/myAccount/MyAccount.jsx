@@ -54,8 +54,23 @@ const MyAccount = () => {
     }
   };
 
+  
+
   // Nếu chưa load xong user thì có thể return null hoặc loading (tùy chọn)
   if (!user) return null;
+
+  // Dữ liệu mẫu (sau này bạn thay bằng API)
+  const stats = {
+    totalOrders: 12,
+    processing: 2,
+    wishlist: 5,
+    points: 1250
+  };
+
+  const recentOrders = [
+    { id: 'DH0123', date: '05/03/2026', total: '1.250.000 ₫', status: 'Đang giao' },
+    { id: 'DH0122', date: '28/02/2026', total: '850.000 ₫', status: 'Hoàn thành' },
+  ];
 
   return (
     <>
@@ -99,12 +114,83 @@ const MyAccount = () => {
             {/* --- NỘI DUNG PHẢI --- */}
             <div className="account-content">
               {activeTab === 'Thống kê' && (
-                <div className="dashboard-content fade-in">
-                  <h3>Thống kê mua hàng </h3>
-                  <p>
-                    Chào mừng <strong>{user.fullName}</strong> quay trở lại. Tại đây bạn có thể xem các đơn hàng gần đây, quản lý địa chỉ giao hàng và thông tin tài khoản.
-                  </p>
-                </div>
+                <div className="account-dashboard fade-in">
+      <h2 className="dashboard-title">Thống kê mua hàng</h2>
+      <p className="dashboard-subtitle">
+        Chào mừng quay trở lại, Lê Thảo Ly. Tại đây bạn có thể xem các đơn hàng gần đây và thông tin tài khoản.
+      </p>
+
+      {/* --- PHẦN 1: CÁC THẺ SỐ LIỆU --- */}
+      <div className="stat-cards-container">
+        <div className="stat-card">
+          <div className="stat-icon box-icon">📦</div>
+          <div className="stat-info">
+            <h3>{stats.totalOrders}</h3>
+            <p>Tổng đơn hàng</p>
+          </div>
+        </div>
+        
+        <div className="stat-card">
+          <div className="stat-icon truck-icon">🚚</div>
+          <div className="stat-info">
+            <h3>{stats.processing}</h3>
+            <p>Đơn đang giao</p>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon heart-icon">🤍</div>
+          <div className="stat-info">
+            <h3>{stats.wishlist}</h3>
+            <p>Sản phẩm yêu thích</p>
+          </div>
+        </div>
+      </div>
+
+      {/* --- PHẦN 2: THẺ THÀNH VIÊN --- */}
+      <div className="membership-card">
+        <div className="membership-info">
+          <h4>Hạng thành viên: <span>Silver (Bạc)</span></h4>
+          <p>Tích lũy thêm <b>750.000 ₫</b> để lên hạng Vàng.</p>
+        </div>
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: '65%' }}></div>
+        </div>
+      </div>
+
+      {/* --- PHẦN 3: ĐƠN HÀNG MỚI NHẤT --- */}
+      <div className="recent-orders-section">
+        <div className="section-header">
+          <h3>Đơn hàng gần đây</h3>
+          <a href="/MyAccount/Orders" className="view-all-link">Xem tất cả</a>
+        </div>
+        
+        <table className="recent-orders-table">
+          <thead>
+            <tr>
+              <th>Mã đơn</th>
+              <th>Ngày đặt</th>
+              <th>Tổng tiền</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recentOrders.map((order, index) => (
+              <tr key={index}>
+                <td className="order-id">#{order.id}</td>
+                <td>{order.date}</td>
+                <td className="order-total">{order.total}</td>
+                <td>
+                  <span className={`status-badge ${order.status === 'Hoàn thành' ? 'success' : 'processing'}`}>
+                    {order.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      </div>
               )}
 
               {/* Tab Thông tin tài khoản (Hiển thị dữ liệu thật) */}

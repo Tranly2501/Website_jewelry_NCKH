@@ -1,0 +1,7 @@
+Logic Toán học đúng: "Hiệu tọa độ"
+Để bàn tay giữ nguyên hình dạng và chỉ dài ra/ngắn lại theo tay thật, chúng ta phải dùng phép trừ Vector: 
+
+V ( locallBone) = (PLandmarkChild - P LandmarkkParent) * scale 
+
+Giải thích: Vị trí của xương ngón tay trong Three.js chính là độ dài và hướng từ khớp trước đó đến nó.
+

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // 1. THÊM IMPORT 
 import { transformProduct } from "../../util/transformProduct.js"; 
 import {useCart} from '../../util/CartContenxt.jsx';
 
-import { ARProcessor } from '../../components/ArProcessor.jsx';
+import { ARProcessor } from '../../components/AR/ArProcessor.jsx';
 import "./AR.css";
 import "../../index.css"
 
@@ -104,10 +104,10 @@ const AR = () => {
       if (selectedProduct.model_url) {
         const fullModelUrl = `http://localhost:8080${selectedProduct.model_url}`;
         console.log("Đang load model 3d từ:", fullModelUrl);
-        processorRef.current.loadModel(fullModelUrl); 
+       processorRef.current.switchProduct(selectedProduct);
       } else {
         console.log("Sản phẩm không có model 3D, xóa model cũ");
-        processorRef.current.loadModel(null); // Gửi null để ARProcessor xóa nhẫn cũ
+        processorRef.current.clearModel(); // Gửi null để ARProcessor xóa nhẫn cũ
       }
     } 
   }, [selectedProduct]);
@@ -125,11 +125,15 @@ const AR = () => {
     }
   };
 
-  const takePhoto = () => {
-    const width = videoRef.current.videoWidth;
-    const height = videoRef.current.videoHeight;
+const takePhoto = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const width = video.videoWidth;
+    const height = video.videoHeight;
     const ctx = canvasRef.current.getContext('2d');
 
+    // Set kích thước canvas bằng kích thước video gốc
     canvasRef.current.width = width;
     canvasRef.current.height = height;
 
@@ -137,8 +141,17 @@ const AR = () => {
     ctx.translate(width, 0);
     ctx.scale(-1, 1);
     
-    ctx.drawImage(videoRef.current, 0, 0, width, height);
+    // 1. VẼ LỚP VIDEO (CAMERA THẬT) XUỐNG DƯỚI CÙNG
+    ctx.drawImage(video, 0, 0, width, height);
+
+    // 2. TÌM VÀ VẼ LỚP 3D (CHIẾC NHẪN) ĐÈ LÊN TRÊN
+    // arContainerRef là div chứa canvas do Three.js/ARProcessor sinh ra
+    const arCanvas = arContainerRef.current.querySelector('canvas');
+    if (arCanvas) {
+      ctx.drawImage(arCanvas, 0, 0, width, height);
+    }
     
+    // 3. XUẤT THÀNH FILE ẢNH
     const dataUrl = canvasRef.current.toDataURL('image/png');
     setPhoto(dataUrl);
 
@@ -381,7 +394,10 @@ const handleAddToCart = async (e,product) => {
             </div>
             <div className="ar-popup-actions">
               <button className="popup-btn close" onClick={closePopup}>Đóng</button>
-              <a href={photo} download="ar-snapshot.png" className="popup-btn download">Tải xuống</a>
+              <a href={photo}
+               download={`AR_${selectedProduct ? selectedProduct.name.replace(/\s+/g, '_') : 'snapshot'}.png`} 
+                className="popup-btn download">
+                Tải xuống</a>
             </div>
           </div>
         </div>
